@@ -1,0 +1,11 @@
+{
+    "elements": {},
+    "attributes": {
+        "mouseleave": {
+            "context": "span"
+        },
+        "onmouseleave": {
+            "context": "span"
+        }
+    }
+}

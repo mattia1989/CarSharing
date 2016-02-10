@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html>
+    
+    <head>
+        <link rel="stylesheet" type="text/css" href="../css/test.css" />
+        <script type="text/javascript" src="./test.js" ></script>
+        <style>
+            p {background-color: #000080;}
+        </style>
+    </head>
+    
+
+    
+    <body>
+        <p style="background-color: green;color: whitesmoke;">ciao mondo!</p>
+        <p>ciao mondo due!</p>
+        <div id="mattia">Ciao mondo tre!</div>
+        
+        <div style="border: 1px solid black;">
+            <div class="inline" id="button1" onclick="testOnClick()">Ciao 1</div>
+            <div class="inline" id="button2" onmouseover="myOnMouseEnter();" onmouseleave="myOnMouseLeave();">Ciao 2</div>
+            <div class="inline" id="button3" onclick="myOnClick()">Ciao 3</div>
+        </div>
+        <div id="button_zone">
+            <p style="background-color: grey;">Giusto per vedere se funziona....</p>
+        </div>
+
+        <script>
+            
+            function myOnMouseEnter() {
+                var button2 = document.getElementById("button2");
+                button2.style.backgroundColor = "red";
+            }
+            
+            function myOnMouseLeave() {
+                var button2 = document.getElementById("button2");
+                button2.style.backgroundColor = "yellow";
+            }
+            
+            function myOnClick() {
+                var myZone = document.getElementById("button_zone");
+                myZone.style.display = 'none';
+            }
+
+        </script>
+    </body>
+
+</html>

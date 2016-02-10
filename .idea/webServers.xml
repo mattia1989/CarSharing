@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="996dd9ab-1273-470d-b1cd-bb93e9c3ba69" name="Apache2OnLinuxMint (project level)" url="http://192.168.56.101/">
+        <fileTransfer host="192.168.56.101" port="21" password="dfc6dfc5dfcddfc3dfc4" username="mdl">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

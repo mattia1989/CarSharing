@@ -1,0 +1,60 @@
+div.inline
+{
+    display: inline
+}
+
+body
+{
+    
+    background-color: green;
+    min-width: 1152px;
+    min-height: 1152px;
+    
+}
+
+#container
+{
+    float: center;
+    position: center;
+    align-content: center;
+    align-items: center;
+    
+}
+
+#login_form
+{
+    
+    border: 3px;
+    border-color: grey;
+    
+}
+
+#pass_dimenticata
+{
+    
+    color: blue;
+    font-size: 16px;
+    text-decoration: underline;
+    
+}
+
+#email_label
+{
+    
+    padding-right: 45px;
+    
+}
+
+#password_label
+{
+    
+    padding-right: 20px;
+    
+}
+
+#accedi_button
+{
+    
+    padding-top: 20px;
+    
+}

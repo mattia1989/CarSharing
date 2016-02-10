@@ -1,0 +1,29 @@
+#mattia
+{
+    text-align: center;
+}
+
+div.inline
+{
+    display: inline;
+    border: 2px solid blue;
+    margin-right: 20px;
+}
+
+#button1
+{
+    color: red;
+    align-items: left;
+}
+
+#button2
+{
+    color: blueviolet;
+    align-items: center;
+}
+
+#button3
+{
+    color: orange;
+    align-self: right;
+}

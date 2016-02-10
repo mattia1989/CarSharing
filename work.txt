@@ -1,0 +1,34 @@
+- Foundation
+    × realizzare l'uml
+    × come funziona realmente???? (la classe padre contiene tutti i metodi per effettuare le varie procedure,
+      nelle classi figlie ci sono semplicemente i settaggi nei casi delle varie tabelle; la classe da richiamare
+      ogni volta OVVIAMENTE è quella FIGLIA, la classe padre non va "scomodata" in quanto contiene semplicemente
+      i metodi MA NON I SETTAGGI, questi sono contenute nelle classi figlie)
+    × completare la classe FDatabase (classe padre principale)
+    × testare il funzionamento del DB -- DB connesso e funzionante
+    × controllare il funzionamento della query
+    × aggiunger la funzione per il check della psw nella FUtente (magari si può anche inserire un metodo solo in quella classe)
+
+- View
+    × realizzare l'uml
+    × perché non viene inserito il form di login? devo stare attento con i layout
+
+- Controller
+    × effettuare le operazioni per vedere all'accesso alla home che tipo di utente è
+
+- Utility
+    × completare UEmail (completare l'header per la mail)
+    × completare il package Utility (dovrebbe mancare una classe)
+
+- Cookie
+    × come funzionano
+    × come si settano
+    × come si leggono
+    × dove si leggono
+
+- Sessione
+    × quando va avviata (penso al momento del login, non si tiene conto di tutti i visitatori)
+    × quando va chiusa (penso al logout o dopo un tempo abbastanza lungo)
+    × come va gestita (con i cookie, il che risponde anche alla domanda precedente)
+
+- Regex
