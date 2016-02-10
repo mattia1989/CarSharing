@@ -2,7 +2,7 @@
 
 /**
  * class FSetup
- * Questa classe viene utilizzata la prima volta alla creazione del DB
+ * Questa classe viene utilizzata la prima volta alla creazione del DB per il Setup
  * @author Mattia Di Luca
  */
 class FSetup {
@@ -100,21 +100,21 @@ class FSetup {
                                        
                                        return TRUE;
                                        
-                                   } else return $this->createProcedureError();
+                                   } else return $this->createProcedureError($paramConnection);
                                    
-                               } else return $this->createProcedureError();
+                               } else return $this->createProcedureError($paramConnection);
                                
-                           } else return $this->createProcedureError();
+                           } else return $this->createProcedureError($paramConnection);
 
-                       } else return $this->createProcedureError();
+                       } else return $this->createProcedureError($paramConnection);
                        
-                   } else return $this->createProcedureError();
+                   } else return $this->createProcedureError($paramConnection);
                    
-               } else return $this->createProcedureError();
+               } else return $this->createProcedureError($paramConnection);
                
-           } else return $this->createProcedureError();
+           } else return $this->createProcedureError($paramConnection);
            
-        } else return $this->createProcedureError();
+        } else return $this->createProcedureError($paramConnection);
         
     }
     
@@ -122,7 +122,7 @@ class FSetup {
         // Con questa devo caricare i dati di prova sul db
     }
     
-    private function createProcedureError() {
+    private function createProcedureError($paramConnection) {
         
         // Procedura d'escape per quando la creazione non va a buon fine
         

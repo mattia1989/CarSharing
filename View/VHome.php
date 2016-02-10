@@ -2,7 +2,6 @@
 
 /**
  * Description of VHome
- *
  * @author mdl
  */
 class VHome extends View {
