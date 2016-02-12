@@ -14,7 +14,7 @@ body
 
 #container
 {
-    float: center;
+    float: start;
     position: center;
     align-content: center;
     align-items: center;
@@ -23,19 +23,25 @@ body
 
 #login_form
 {
-    
-    border: 3px;
+
     border-color: grey;
-    
+
 }
 
-#pass_dimenticata
+#psw_dimenticata_link
 {
     
-    color: blue;
+    color: white;
     font-size: 16px;
     text-decoration: underline;
     
+}
+
+#login_error
+{
+    font-size: 30px;
+    color: red;
+    text-align: center;
 }
 
 #email_label

@@ -14,6 +14,7 @@ class FUtente extends FDatabase {
 
         $this->table = 'Utente';
         $this->keytable = 'email';
+        $this->resultClass = 'EUtente';
 
     }
 

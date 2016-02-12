@@ -42,59 +42,38 @@ class VHome extends View {
 
     /* FUNCTION */
 
-    public function setRegistrato() {
-
-        $sessione = USingleton::getInstances('USession');
-        if ($sessione->getValue('user_type') != false) {
-            $this->setAdmin($sessione->getValue('email'));
-        } else {
-            $this->setUtente($sessione->getValue('email'));
-        }
-
-    }
-
-    private function setUtente($email) {
-
-        $tempTpl = $this->fetch('./templates/Logbar_registrato.tpl');
-
-        $this->assign('navbar', $tempTpl);
-        $this->assign('nome_utente', $email);
-        $this->assign('content', $this->_content);
-        $this->assign('bottom', "Realizzato da Mattia Di Luca *** Beta-testing site ***");
-
-    }
-
-    private function setAdmin($email) {
-
-        $tempTpl = $this->fetch('./templates/Logbar_admin.tpl');
-
-        $this->assign('navbar', $tempTpl);
-        $this->assign('nome_utente', $email);
-        $this->assign('content', $this->_content);
-        $this->assign('bottom', "Realizzato da Mattia Di Luca *** Beta-testing site ***");
-
-    }
-    
     public function setOspite() {
-        
-        $tempTpl = $this->fetch('./templates/Logbar_default.tpl');
-        
-        $this->assign('navbar', $tempTpl);
+
+        $template = $this->processaLogbar('default');
+
+        $this->assign('navbar', $template);
         $this->assign('content', $this->_content);
-        $this->assign('bottom', "Realizzato da Mattia Di Luca *** Beta-testing site ***");
-        
+        $this->assign('bottom', 'MDL');
+
+    }
+
+    public function setUtente($userParam) {
+
+        // assegno il nome
+        $this->assign('nome_utente', $userParam);
+
+        $template = $this->processaLogbar('registrato');
+        $this->assign('navbar', $template);
+        $this->assign('content', $this->_content);
+        $this->assign('bottom', 'MDL');
+
     }
 
     public function processaTemplate($paramTplName) {
-        
         return $this->fetch('./templates/'.$paramTplName.'.tpl');
-        
+    }
+
+    private function processaLogbar($type) {
+        return $this->fetch('./templates/Logbar_'.$type.'.tpl');
     }
 
     public function showPage() {
-     
         $this->display('./templates/Home_'.$this->_layout.'.tpl');
-        
     }
 
 }

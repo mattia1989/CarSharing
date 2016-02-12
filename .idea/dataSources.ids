@@ -161,7 +161,7 @@ parcheggioID</columns>
         <mandatory>1</mandatory>
         <data-type>varchar(40)</data-type>
       </column>
-      <column id="43" parent="6" name="n_documento">
+      <column id="43" parent="6" name="nDocumento">
         <mandatory>1</mandatory>
         <data-type>varchar(20)</data-type>
       </column>

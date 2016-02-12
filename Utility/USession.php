@@ -2,8 +2,7 @@
 
 /**
  * Description of USession
- *
- * @author mdl
+ * @author Mattia Di Luca
  */
 class USession {
     
@@ -20,24 +19,24 @@ class USession {
         
     }
     
-    public function remuveValue($key) {
-        
+    public function removeValue($key) {
+
         unset($_SESSION[$key]);
         
     }
-    
-    static function getValue($key) {
-        
+
+    public function getValue($key) {
+
         if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
         } else {
-            return FALSE;
+            return false;
         }
         
     }
-    
+
     public function destroySession() {
-        session_destroy();
+        return session_destroy();
     }
     
 }

@@ -8,30 +8,22 @@ class CHome {
 
     public function setPage() {
 
-//        $_session = USingleton::getInstances('USession');
-//        $_session_user = $_session->getValue('email');
-//        $_session_psw = $_session->getValue('password');
-//
-//        echo 'sessionUser: '.$_session_user.', sessionPsw: '.$_session_psw;
-//
-//        $futente = new FUtente();
-////        $user = $futente->load('mail@gmail.com');
-//        $user = $futente->load($_session_user);
-//        $string = ' db load: user: '.$user['email'].', password: '.$user['password'];
-//        echo $string;
-        
-        $vhome = USingleton::getInstances('VHome');
-        $cutente = USingleton::getInstances('CUtente');
-        $_user = $cutente->getUtente();
-        $tmpTpl = $this->smista($_user);
-        $vhome->setContent($tmpTpl);
+        // perché non si vede neanche la home???
 
-        if ($_user != false) {
-            $vhome->setRegistrato();
-        } else {
+        $vhome = USingleton::getInstances('VHome');
+        // ripesco il template di base
+        $tmp = $this->smista('mail@gmail.com');
+        // controllo se esiste l'utente
+        $cutente = USingleton::getInstances('CUtente');
+        $exist = $cutente->getUser();
+        // gli assegno la navbar
+        if (!$exist) {
             $vhome->setOspite();
+        } else {
+            $vhome->setUtente($exist);
         }
-        $vhome->setContent($tmpTpl);
+
+        $vhome->setContent($tmp);
         $vhome->showPage();
         
     }
@@ -40,7 +32,7 @@ class CHome {
      * Smista le domande per i template da assegnare
      * @return mixed
      */
-    public function smista($param) {
+    public function smista($paramEmail) {
         
         $vhome = USingleton::getInstances('VHome');
         
@@ -48,11 +40,8 @@ class CHome {
             
             case 'utente':
                 $cutente = USingleton::getInstances('CUtente');
-                return $cutente->smista($param);
-                break;
-
-            case 'registrazione':
-                $vhome->setRegistrazione();
+                $tmp = $cutente->smista($paramEmail);
+                $vhome->setContent($tmp);
                 break;
                 
             case 'mezzi':
@@ -61,15 +50,9 @@ class CHome {
             case 'parcheggi':
                 break;
             
-            case 'disponibili':
-                break;
-            
-            case 'area_amministrativa':
-                break;
-            
             default:
                 return $vhome->processaTemplate('Home_default');
-                
+//                $vhome->setContent($tmp);
         }
     }
     

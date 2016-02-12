@@ -3,206 +3,136 @@
 /**
  * Description of CUtente
  *
- * @author mdl
+ * @author Mattia Di Luca
  */
 class CUtente {
     
-    private $nome = null;
-    private $email = null;
-    private $password = null;
-    private $n_documento = null;
+    private $nome = "";
+    private $email = "";
+    private $password = "";
+    private $nDocumento = "";
 
-    private $errore_email = null;
-    private $errore_generico = null;
+    private $errore_generico = "";
 
-    public function smista($param) {
+    /* METHOD */
+
+    public function smista($paramEmail) {
 
         $vutente = USingleton::getInstances('VUtente');
-        switch($vutente->getTask()) {
+
+        switch ($vutente->getTask()) {
 
             case 'login':
-                return $this->login();
+                return $vutente->processaTemplateUtente('login');
+                break;
 
-            case 'autenticato':
-                return $this->autenticaLayout($param);
+            case 'autentica':
+                $flag = $this->richiestaLogin();
+                return $vutente->esitoLogin($flag);
+                break;
 
             case 'registrazione':
-                return $this->registrazione();
+                return $vutente->processaTemplateUtente('registrazione');
+                break;
 
-            case 'recupera_password':
-                return $this->recuperaPassoword();
+            case 'recuperapsw':
+                return $vutente->processaTemplateUtente('recuperapsw');
+                break;
 
             case 'area_utente':
-                return $this->pannelloUtente(); // gli devo passare il tipo di utente o me lo prendo dentro???
-
-            case 'pannello_admin':
-                return $this->pannelloAmministratore();
+                return $vutente->processaTemplateUtente('area_utente');
+                break;
 
             case 'logout':
-                return $this->logoutLayout();
+                $this->proceduraLogout();
+                return $vutente->processaTemplateUtente('logout');
+                break;
 
         }
+    }
+
+    public function getUser() {
+
+        $cookie = false;
+
+        // recupero il valore dal cookie
+        $usession = USingleton::getInstances('USession');
+        $cookie = $usession->getValue('email');
+
+        return $cookie;
 
     }
 
-    public function getUtente() {
+    private function setCookie($paramEmail, $paramType) {
+
+        // setto il cookie
+        $usession = USingleton::getInstances('USession');
+        $usession->setValue('email', $paramEmail);
+        $usession->setValue('user_type', $paramType);
+
+    }
+
+    private function richiestaLogin() {
 
         $flag = false;
-        $vutente = USingleton::getInstances('VUtente');
-        $_controller = $vutente->getController();
-        $_task = $vutente->getTask();
-        $mSession = USingleton::getInstances('USession');
-//        $this->email = $_REQUEST['email'];
-//        $this->password = $_REQUEST['password'];
+        // qui controllo se l'utente può autenticarsi
 
-        if ($mSession->getValue('email') != false) {
-            // se sono già loggato (cookie settato)
-            $flag = true;
-        } elseif ($_controller == 'utente' && $_task == 'login') {
-            // altrimenti effettuo il login
-            $flag = $this->autentica($this->email, $this->password); // questi due parametri sono null, dove mi conviene settarli????
+        // prendo i dati dalla view di login
+        $vutente = USingleton::getInstances('VUtente');
+        $user_data = $vutente->getLoginData();
+
+        // prendo i dati dal db in base al nome utente
+//        $user_db = new FUtente();
+//        $user_load = $user_db->load($user_data['email']);
+//
+//        echo $user_load->getEmail().' | | | | | '.$user_load->getPassword();
+
+        $user_load = true;
+
+        if ($user_load == false) {
+            $this->errore_generico = 'email not found';
+        } else {
+            // avvio la funzione per fare il match
+            echo $user_data['email'];
+            $flag = $this->checkUserAndPsw($user_data, $user_load);
         }
 
-        if ($_controller == 'utente' && $_task == 'logout') {
-            // o il logout a seconda dei casi
-            $this->logout();
+        return $flag;
+
+    }
+
+    private function checkUserAndPsw($inputData, $dbData) {
+
+        $flag = false;
+
+        if ($inputData != false) {
+            $this->setCookie('mail@gmail.com', 'true');
+            $flag = true;
+        } else {
+            $this->errore_generico = 'dati non validi';
             $flag = false;
         }
 
-        return $flag;
-
-    }
-
-    public function logout() {
-
-        $mSession = USingleton::getInstances('USession');
-        $mSession->remuveValue('email');
-        $mSession->remuveValue('password');
-        $mSession->remuveValue('user_type');
-        $mSession->destroySession();
-
-    }
-
-    public function autentica($user_mail, $user_psw) {
-
-        $mSession = USingleton::getInstances('USession');
-//        $mSession->setValue('email', 'mail@gmail.com');
-//        $mSession->setValue('password', 'ciaociao');
-//        $mSession->setValue('user_type', $user->admin);
-        echo $mSession->getValue('email').$mSession->getValue('password');
-
-        // qui faccio la query al db e controllo
-        $vutente = USingleton::getInstances('VUtente');
-        $futente = new FUtente();
-        $user = $futente->load($user_mail);
-        $user = $futente->load('mail@gmail.com');
-//        echo $user;
-
-        $flag = false;
-
-        if ($user != false) {
-            // sei già loggato
-            $flag = true;
-        } else{
-
-            if ($user['email'] == $user_mail && $user['password'] == $user_psw) {
-
-                echo 'cazzooooooooooo!!!';
-
-                // good login
-                $mSession = USingleton::getInstances('USession');
-                $mSession->setValue('email', $user->email);
-                $mSession->setValue('password', $user->password);
-                $mSession->setValue('user_type', $user->admin);
-                $flag = true;
-
-            } else {
-                // bad data
-                $this->errore_generico = 'email/password errata';
-            }
-            // bad email
-            $this->errore_email = 'email non presente nel db';
-        }
+//        // qui prima va inserita una funzione che trasforma la psw in quella 'magica' per farne il confronto sotto
+//        if ($inputData['email'] == dbData->getEmail() && $inputData['password'] == $dbData->getPassword()) {
+//
+//            $this->setCookie($dbData->getEmail(), $dbData->isAdmin());
+//            $flag = true;
+//
+//        } else {
+//            $this->errore_generico = 'dati non validi';
+//        }
 
         return $flag;
-
     }
 
-    public function login() {
+    private function proceduraLogout() {
 
-        $vutente = USingleton::getInstances('VUtente');
-        $tempTpl = $vutente->processaTemplate('Autenticazione');
-        $vutente->assegnaComponente('content', $tempTpl);
-        return $vutente->processaTemplate();
+        // cancello i cookie
+        $usession = USingleton::getInstances('USession');
+        $usession->removeValue('email');
+        return $usession->destroySession();
 
-    }
-
-    public function checkUser($paramUser) {
-        // vorrei che questa funzione si occupasse unicamente
-        // del controllare se username & password coincidano
-        // tornando unicamente un booleano di modo che nel momento
-        // in cui inserirò una nuova funzione per fare il check
-        // dovrò modificare solo questa
-    }
-
-    public function registrazione() {
-
-        $vutente = USingleton::getInstances('VUtente');
-        $vutente->setLayout('registrazione');
-        $tempTpl = $vutente->processaTemplate();
-        $vutente->assegnaComponente('content', $tempTpl);
-        return $vutente->processaTemplate();
-
-    }
-
-    public function pannelloUtente(){
-
-        $vutente = USingleton::getInstances('VUtente');
-        $tempTpl = $vutente->processaTemplate('gestione_utente');
-        $vutente->assegnaComponente('content', $tempTpl);
-        return $vutente->processaTemplate('gestione_utente');
-
-    }
-
-    public function pannelloAmministratore() {
-
-        $vutente = USingleton::getInstances('VUtente');
-        $tempTpl = $vutente->processaTemplate('gestione_amministratore');
-        $vutente->assegnaComponente('content', $tempTpl);
-        return $vutente->processaTemplate('gestione_amministratore');
-
-    }
-
-    private function recuperaPassoword() {
-
-        $vutente = USingleton::getInstances('VUtente');
-        $vutente->setLayout('recuperapsw');
-        $tmpTpl = $vutente->processaTemplate();
-        $vutente->assegnaComponente('content', $tmpTpl);
-        return $vutente->processaTemplate('recupera_password');
-
-    }
-
-    private function logoutLayout() {
-
-        $vutente = USingleton::getInstances('VUtente');
-        $vutente->setLayout('logout');
-        $tmpTpl = $vutente->processaTemplate();
-        $vutente->assegnaComponente('content', $tmpTpl);
-        return $vutente->processaTemplate('logout');
-
-    }
-
-    public function autenticaLayout($param) {
-        $vutente = USingleton::getInstances('VUtente');
-        if ($param) {
-            $vutente->setLayout('redirect');
-            return $result = $vutente->processaTemplate();
-        } else {
-            // qui devo impostare l'errore del login
-//            $vutente->setErroreLogin('errore'); // come la devo fare questa?
-            return $result = $vutente->processaTemplate();
-        }
     }
 
 }

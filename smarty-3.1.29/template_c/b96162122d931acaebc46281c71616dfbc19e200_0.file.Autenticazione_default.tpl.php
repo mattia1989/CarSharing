@@ -1,6 +1,6 @@
 <?php
 /* Smarty version 3.1.29, created on 2016-01-31 18:16:42
-  from "/opt/lampp/htdocs/CarSharing/templates/Autenticazione_default.tpl" */
+  from "/opt/lampp/htdocs/CarSharing/templates/Utente_login.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
@@ -10,7 +10,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
     'b96162122d931acaebc46281c71616dfbc19e200' => 
     array (
-      0 => '/opt/lampp/htdocs/CarSharing/templates/Autenticazione_default.tpl',
+      0 => '/opt/lampp/htdocs/CarSharing/templates/Utente_login.tpl',
       1 => 1454260366,
       2 => 'file',
     ),

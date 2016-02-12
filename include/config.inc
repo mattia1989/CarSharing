@@ -19,7 +19,7 @@ $configs['debug'] = false;
 
 $configs['mysql']['localhost'] = '192.168.56.101';
 $configs['mysql']['user'] = 'monty';
-$configs['mysql']['password'] = 'ciaociao';
+$configs['mysql']['password'] = 'login';
 $configs['mysql']['database'] = 'carsharing';
 
 // E-mail

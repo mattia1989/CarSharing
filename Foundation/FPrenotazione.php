@@ -13,6 +13,7 @@ class FPrenotazione extends FDatabase {
         
         $this->table = 'Prenotazione';
         $this->keytable = 'id';
+        $this->resultClass = 'EPrenotazione';
         
     }
     

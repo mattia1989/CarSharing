@@ -13,6 +13,7 @@ class FMezzo extends FDatabase {
         
         $this->table = 'Mezzo';
         $this->keytable = 'id';
+        $this->resultClass = 'EMezzo';
         
     }
     

@@ -13,6 +13,7 @@ class FParcheggio extends FDatabase {
         
         $this->table = 'Parcheggio';
         $this->keytable = 'id';
+        $this->resultClass = 'EParcheggio';
         
     }
     

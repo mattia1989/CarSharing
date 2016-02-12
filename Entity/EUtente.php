@@ -6,11 +6,10 @@
  * @author mdl
  */
 class EUtente {
-    
-    private $id;
-    private $nome;
-    private $password;
+
     private $email;
+    private $password;
+    private $nome;
     private $nDocumento;
     private $stato = false;
     private $admin = false;
@@ -20,11 +19,11 @@ class EUtente {
      * @param Array() $param
      */
     public function __construct($param = Array()) {
-        
-        $this->id = $param['id'];
-        $this->nome = $param['nome'];
+
         $this->email = $param['email'];
         $this->password = $param['password'];
+        $this->nome = $param['nome'];
+        $this->nDocumento = $param['nDocumento'];
         $this->stato = $param['stato'];
         $this->admin = $param['admin'];
         
@@ -82,7 +81,7 @@ class EUtente {
 
     /**
      * @access public
-     * @return bool
+     * @return boolean
      */
     public function isAdmin() {
         return $this->admin;
@@ -92,7 +91,7 @@ class EUtente {
     
     /**
      * @access public
-     * @param int $param
+     * @param int
      */
     public function setId($param) {
         $this->id = $param;
@@ -100,7 +99,7 @@ class EUtente {
     
     /**
      * @access public
-     * @param String $param
+     * @param String
      */
     public function setNome($param) {
         $this->nome = $param;
@@ -108,7 +107,7 @@ class EUtente {
     
     /**
      * @access public
-     * @param String $param
+     * @param String
      */
     public function setEmail($param) {
         $this->email = $param;
@@ -116,7 +115,7 @@ class EUtente {
     
     /**
      * @access public
-     * @param String $param
+     * @param String
      */
     public function setPassword($param) {
         $this->password = $param;
@@ -124,7 +123,7 @@ class EUtente {
         
     /**
      * @access public
-     * @param String $param
+     * @param String
      */
     public function setNDocumento($param) {
         $this->nDocumento = $param;
@@ -132,7 +131,7 @@ class EUtente {
     
     /**
      * @access public
-     * @param boolean $param
+     * @param boolean
      */
     public function setStato($param) {
         
@@ -146,7 +145,7 @@ class EUtente {
 
     /**
      * @access public
-     * @param $param
+     * @param boolean
      */
     public function setAdmin($param)
     {

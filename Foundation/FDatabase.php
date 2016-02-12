@@ -5,11 +5,7 @@
  * @author Mattia Di Luca
  */
 class FDatabase {
-    
-    /**
-     * @access public
-     * @var type
-     */
+
     public $connessione;
     
     protected $host;
@@ -49,21 +45,19 @@ class FDatabase {
      */
     public function getObject() {
 
-        echo count($this->result);
-
-        if (count($this->result) != 0) {
+        if (count($this->result) > 0) {
             $nrighe = mysqli_num_rows($this->result);
 
             if ($nrighe > 0) {
 
-                $rowObject = mysqli_fetch_object($this->result, $this->returnClass);
+                $row = mysqli_fetch_object($this->result, $this->returnClass);
                 $this->result = false;
-                return $rowObject;
+                return $row;
 
             } else {
-
                 return false;
             }
+
         } else {
             return false;
         }
@@ -72,7 +66,7 @@ class FDatabase {
 
     /* SETTER */
     
-    /* FUNCTION */
+    /* METHOD */
     
     /**
      * @access public
@@ -93,7 +87,7 @@ class FDatabase {
         
         if ($this->connessione != TRUE) {
             echo ("Errore mysql: " . mysqli_error());
-            return FALSE;
+            return false;
         }
 
         $selectedDB = mysqli_select_db($this->connessione, $paramDb);
@@ -103,7 +97,7 @@ class FDatabase {
             return false;
         }
 
-//        $this->executeQuery("SET NAMES utf8");
+        $this->executeQuery("SET NAMES utf8");
 
         return true;
         
@@ -118,27 +112,23 @@ class FDatabase {
 
         $result = mysqli_query($this->connessione, $paramQuery) or die("Impossibile effettuare la query: "
                 . mysqli_error($this->connessione));
-        $i = 0;
+
         $tmpResult = array();
 
         $numRows = mysqli_num_rows($result);
 
-        while ($i < $numRows) {
-            
+        for ($i = 0; $i < $numRows; $i++) {
+
             $query_result = mysqli_fetch_assoc($result);
             $tmpResult[$i] = $query_result;
-            echo $tmpResult[$i]['email'];
-            
-            $i++;
-            
+
         }
-        
+
         $this->result = $tmpResult;
 
         echo 'Query result count value: '.count($this->result);
 
-        if (count($this->result) != 0) {
-
+        if (count($this->result) > 0) {
             return $this->result;
         } else {
             return false;
@@ -158,6 +148,7 @@ class FDatabase {
                 
                 $campi .= ',';
                 $valori .= ',';
+
             }
             
             $keyval = mysqli_escape_string($key);
