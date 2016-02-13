@@ -39,9 +39,10 @@ body
 
 #login_error
 {
-    font-size: 30px;
+    font-size: 25px;
     color: red;
     text-align: center;
+    padding: 10px;
 }
 
 #email_label

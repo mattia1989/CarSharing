@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - carsharing@192.168.56.101" uuid="26283c08-b41b-40f3-9cf9-4dd51c0d01dc">
+  <data-source name="MySQL - @192.168.56.101" uuid="26283c08-b41b-40f3-9cf9-4dd51c0d01dc">
+    <database-info product="MySQL" version="5.5.5-10.1.9-MariaDB" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.4"/>
+  </data-source>
+  <data-source name="MySQL - @192.168.56.101/carsharing" uuid="d29eebde-a54d-493a-93d2-571e84c459ec">
     <database-info product="MySQL" version="5.5.5-10.1.9-MariaDB" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>

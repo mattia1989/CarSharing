@@ -7,12 +7,12 @@
  */
 class EUtente {
 
-    private $email;
-    private $password;
-    private $nome;
-    private $nDocumento;
-    private $stato = false;
-    private $admin = false;
+    public $email;
+    public $password;
+    public $nome;
+    public $nDocumento;
+    public $stato = false;
+    public $admin = false;
     
     /**
      * @access public
@@ -32,50 +32,10 @@ class EUtente {
     /* GETTER */
     
     /**
-     * @access public
-     * @return int
-     */
-    public function getId() {
-        return $this->id;
-    }
-    
-    /**
-     * @access public
-     * @return String
-     */
-    public function getNome() {
-        return $this->nome;
-    }
-    
-    /**
-     * @access public
-     * @return String
-     */
-    public function getEmail() {
-        return $this->email;
-    }
-    
-    /**
-     * @access public
-     * @return String
-     */
-    public function getPassword() {
-        return $this->password;
-    }
-        
-    /**
-     * @access public
-     * @return String
-     */
-    public function getNDocumento() {
-        return $this->nDocumento;
-    }
-    
-    /**
      * @æccess public
      * @return boolean
      */
-    public function getStato() {
+    public function isEnable() {
         return $this->stato;
     }
 
@@ -88,46 +48,6 @@ class EUtente {
     }
 
     /* SETTER */
-    
-    /**
-     * @access public
-     * @param int
-     */
-    public function setId($param) {
-        $this->id = $param;
-    }
-    
-    /**
-     * @access public
-     * @param String
-     */
-    public function setNome($param) {
-        $this->nome = $param;
-    }
-    
-    /**
-     * @access public
-     * @param String
-     */
-    public function setEmail($param) {
-        $this->email = $param;
-    }
-    
-    /**
-     * @access public
-     * @param String
-     */
-    public function setPassword($param) {
-        $this->password = $param;
-    }
-        
-    /**
-     * @access public
-     * @param String
-     */
-    public function setNDocumento($param) {
-        $this->nDocumento = $param;
-    }
     
     /**
      * @access public

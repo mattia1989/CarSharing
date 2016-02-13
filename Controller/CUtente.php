@@ -28,7 +28,7 @@ class CUtente {
 
             case 'autentica':
                 $flag = $this->richiestaLogin();
-                return $vutente->esitoLogin($flag);
+                return $this->esitoLogin($flag);
                 break;
 
             case 'registrazione':
@@ -50,6 +50,18 @@ class CUtente {
 
         }
     }
+
+    /* GETTER */
+
+    /**
+     * @return string
+     */
+    public function getErroreGenerico()
+    {
+        return $this->errore_generico;
+    }
+
+    /* METHOD */
 
     public function getUser() {
 
@@ -82,18 +94,13 @@ class CUtente {
         $user_data = $vutente->getLoginData();
 
         // prendo i dati dal db in base al nome utente
-//        $user_db = new FUtente();
-//        $user_load = $user_db->load($user_data['email']);
-//
-//        echo $user_load->getEmail().' | | | | | '.$user_load->getPassword();
-
-        $user_load = true;
+        $user_db = new FUtente();
+        $user_load = $user_db->load($user_data['email']);
 
         if ($user_load == false) {
-            $this->errore_generico = 'email not found';
+            $this->errore_generico = 'email non presente';
         } else {
             // avvio la funzione per fare il match
-            echo $user_data['email'];
             $flag = $this->checkUserAndPsw($user_data, $user_load);
         }
 
@@ -105,25 +112,41 @@ class CUtente {
 
         $flag = false;
 
-        if ($inputData != false) {
-            $this->setCookie('mail@gmail.com', 'true');
+        // mi riporto la password nel formato memorizzato sul db
+        $inputPassword = $this->maskPassword($inputData['password']);
+
+        if ($inputData['email'] == $dbData->email && $inputPassword == $dbData->password) {
+
+            $this->setCookie($dbData->email, $dbData->admin);
             $flag = true;
+
         } else {
             $this->errore_generico = 'dati non validi';
-            $flag = false;
         }
 
-//        // qui prima va inserita una funzione che trasforma la psw in quella 'magica' per farne il confronto sotto
-//        if ($inputData['email'] == dbData->getEmail() && $inputData['password'] == $dbData->getPassword()) {
-//
-//            $this->setCookie($dbData->getEmail(), $dbData->isAdmin());
-//            $flag = true;
-//
-//        } else {
-//            $this->errore_generico = 'dati non validi';
-//        }
-
         return $flag;
+    }
+
+    private function maskPassword($paramPassword) {
+        // la concateno col SALT e ne faccio l'hash
+        return sha1(FSalt::$SALT.$paramPassword);
+    }
+
+    public function esitoLogin($paramEsito) {
+
+        $vutente = USingleton::getInstances('VUtente');
+
+        $template = '';
+        if ($paramEsito != false) {
+            // imposto il layout con la redirect
+            $template = $vutente->processaTemplateUtente('redirect');
+        } else {
+            // reimposto il layout di login con l'errore
+            $vutente->setErroreLogin($this->errore_generico); // perché non setta l'errore
+            $template = $vutente->processaTemplateUtente('login');
+        }
+        return $template;
+
     }
 
     private function proceduraLogout() {

@@ -12,9 +12,11 @@ class FDatabase {
     protected $user;
     protected $password;
     protected $database;
-    protected $result;
+
     protected $table;
     protected $keytable;
+
+    protected $result;
     protected $resultClass;
 
 
@@ -38,45 +40,20 @@ class FDatabase {
     public function getConnessione() {
         return $this->connessione;
     }
-    
-    /**
-     * @access public
-     * @return boolean
-     */
-    public function getObject() {
-
-        if (count($this->result) > 0) {
-            $nrighe = mysqli_num_rows($this->result);
-
-            if ($nrighe > 0) {
-
-                $row = mysqli_fetch_object($this->result, $this->returnClass);
-                $this->result = false;
-                return $row;
-
-            } else {
-                return false;
-            }
-
-        } else {
-            return false;
-        }
-        
-    }
 
     /* SETTER */
     
     /* METHOD */
     
     /**
-     * @access public
+     * @access private
      * @param String $paramHost
      * @param String $paramUser
      * @param String $paramPsw
      * @param String $paramDb
      * @return boolean
      */
-    public function connect($paramHost, $paramUser, $paramPsw, $paramDb) {
+    private function connect($paramHost, $paramUser, $paramPsw, $paramDb) {
         
         $this->host = $paramHost;
         $this->user = $paramUser;
@@ -110,59 +87,72 @@ class FDatabase {
      */
     public function executeQuery($paramQuery) {
 
-        $result = mysqli_query($this->connessione, $paramQuery) or die("Impossibile effettuare la query: "
+        $this->result = mysqli_query($this->connessione, $paramQuery) or die("Impossibile effettuare la query: "
                 . mysqli_error($this->connessione));
 
-        $tmpResult = array();
-
-        $numRows = mysqli_num_rows($result);
-
-        for ($i = 0; $i < $numRows; $i++) {
-
-            $query_result = mysqli_fetch_assoc($result);
-            $tmpResult[$i] = $query_result;
-
-        }
-
-        $this->result = $tmpResult;
-
-        echo 'Query result count value: '.count($this->result);
-
-        if (count($this->result) > 0) {
-            return $this->result;
-        } else {
+        if (!$this->result) {
+            // non andata a buon fine
             return false;
+        } else {
+
+            if ($this->result == true) {
+                // andata a buon fine
+                return true;
+            } else {
+                // è una SELECT, SHOW, DESCRIBE, EXPLAIN
+                return $this->getQueryResult();
+            }
+
         }
+//        $tmpResult = array();
+//
+//        $numRows = mysqli_num_rows($result);
+//
+//        for ($i = 0; $i < $numRows; $i++) {
+//
+//            $query_result = mysqli_fetch_assoc($result);
+//            $tmpResult[$i] = $query_result;
+//
+//        }
+//
+//        $this->result = $tmpResult;
+//
+//        if (count($this->result) > 0) {
+//            return $this->result;
+//        } else {
+//            return false;
+//        }
         
     }
 
-    public function addObject($param) {
-        
-        $valori = '';
-        $campi = '';
-        $i = 0;
-        
-        foreach ($param as $key => $value) {
-            
-            if ($i > 0) {
-                
-                $campi .= ',';
-                $valori .= ',';
-
-            }
-            
-            $keyval = mysqli_escape_string($key);
-            $valueval = mysqli_escape_string($value);
-            $campi .= "$keyval";
-            $valori .= "$valueval";
-            $i++;
-            
+    private function getQueryResult() {
+        // controllo quanti elementi sono
+        if (count($this->result) > 1) {
+            return $this->getObject();
+        } else {
+            return $this->getArrayObject();
         }
-        
-        $query = "INSERT INTO $this->table ($campi) VALUES ($valori);";
+    }
 
-        return $this->executeQuery($query);
-        
+    private function getObject() {
+        // mi faccio tornare il singolo oggetto
+        return mysqli_fetch_object($this->result);
+    }
+
+    private function getArrayObject() {
+        // mi faccio tornare un array con dentro i singoli oggetti
+        $resultArray = array();
+        $i = 0;
+
+        while ($obj = $this->getObject()) {
+
+            $resultArray[$i] = $obj;
+            $i++;
+
+        }
+
+        return $resultArray;
+
     }
     
     public function load($key) {

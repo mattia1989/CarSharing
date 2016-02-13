@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1491511315">
-    <data-source source="LOCAL" name="MySQL - carsharing@192.168.56.101" uuid="26283c08-b41b-40f3-9cf9-4dd51c0d01dc">
+  <component name="DataSourceManagerImpl" format="xml" hash="171055573">
+    <data-source source="LOCAL" name="MySQL - @192.168.56.101" uuid="26283c08-b41b-40f3-9cf9-4dd51c0d01dc">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://192.168.56.101/</jdbc-url>
+      <default-dialect>MySQL</default-dialect>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+        <property name="characterEncoding" value="utf8" />
+        <property name="characterSetResults" value="utf8" />
+        <property name="yearIsDateType" value="false" />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="MySQL - @192.168.56.101/carsharing" uuid="d29eebde-a54d-493a-93d2-571e84c459ec">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
