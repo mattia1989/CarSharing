@@ -89,13 +89,13 @@ class FDatabase {
 
         $this->result = mysqli_query($this->connessione, $paramQuery) or die("Impossibile effettuare la query: "
                 . mysqli_error($this->connessione));
+        echo $temp = $this->result ? ' | | | true | | | | ' : '| | | false | | | ';
 
         if (!$this->result) {
             // non andata a buon fine
             return false;
         } else {
-
-            if ($this->result == true) {
+            if ($this->result == 'TRUE') {
                 // andata a buon fine
                 return true;
             } else {
@@ -104,39 +104,24 @@ class FDatabase {
             }
 
         }
-//        $tmpResult = array();
-//
-//        $numRows = mysqli_num_rows($result);
-//
-//        for ($i = 0; $i < $numRows; $i++) {
-//
-//            $query_result = mysqli_fetch_assoc($result);
-//            $tmpResult[$i] = $query_result;
-//
-//        }
-//
-//        $this->result = $tmpResult;
-//
-//        if (count($this->result) > 0) {
-//            return $this->result;
-//        } else {
-//            return false;
-//        }
         
     }
 
-    private function getQueryResult() {
+    protected function getQueryResult() {
         // controllo quanti elementi sono
         if (count($this->result) > 1) {
-            return $this->getObject();
-        } else {
             return $this->getArrayObject();
+        } else {
+            return $this->getObject();
         }
     }
 
     private function getObject() {
-        // mi faccio tornare il singolo oggetto
-        return mysqli_fetch_object($this->result);
+        // mi faccio tornare il singolo array associativo
+
+//        $temp = mysqli_fetch_assoc($this->result);
+        return mysqli_fetch_assoc($this->result);
+//        return $temp;
     }
 
     private function getArrayObject() {
@@ -158,10 +143,35 @@ class FDatabase {
     public function load($key) {
 
         $query = 'SELECT * FROM '.$this->table.' WHERE '.$this->keytable.' = \''.$key.'\'';
-        $this->executeQuery($query);
 
-        return $this->getObject();
-        
+        $temp = $this->executeQuery($query);
+
+        return $temp;
+
+
+    }
+
+    public function addRow($paramRow) {
+
+        $colonne = '';
+        $valori = '\'';
+
+//        $paramRow = mysqli_real_escape_string($this->connessione, $paramRow);
+
+        foreach ($paramRow as $key => $value) {
+
+            $colonne = $colonne.$key.', ';
+            $valori = $valori.$value.'\', \'';
+
+        }
+
+        $colonne = substr($colonne, 0, strlen($colonne) - 2);
+        $valori = substr($valori, 0, strlen($valori) - 2);
+
+        $query = 'INSERT INTO '.$this->table.' ('.$colonne.') VALUE ('.$valori.');';
+
+        return $this->executeQuery($query);
+
     }
 
     /**

@@ -20,7 +20,7 @@ $(document).ready(function () {
 
             'password_utente': {
                 required: true,
-                minlength: 6
+                minlength: 8
             },
         },
 

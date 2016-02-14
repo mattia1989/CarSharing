@@ -35,8 +35,18 @@ class CUtente {
                 return $vutente->processaTemplateUtente('registrazione');
                 break;
 
+            case 'registra':
+                $flag = $this->richiestaRegistrazione();
+                return $this->esitoRegistrazione($flag);
+
             case 'recuperapsw':
                 return $vutente->processaTemplateUtente('recuperapsw');
+                break;
+
+            case 'redirectpsw':
+                // devo controllare se è nel db:
+                // YES: invio la mail e redirect alla pagina di redirect
+                // NO: inserisco l'errore in quella stessa pagina
                 break;
 
             case 'area_utente':
@@ -45,7 +55,8 @@ class CUtente {
 
             case 'logout':
                 $this->proceduraLogout();
-                return $vutente->processaTemplateUtente('logout');
+                $vutente->setRedirectText('Logout effettuato, stai per essere reindirizzato alla home...');
+                return $vutente->processaTemplateUtente('redirect');
                 break;
 
         }
@@ -66,21 +77,23 @@ class CUtente {
     public function getUser() {
 
         $cookie = false;
-
         // recupero il valore dal cookie
         $usession = USingleton::getInstances('USession');
         $cookie = $usession->getValue('email');
+        $cookie = $usession->getValue('admin');
+        echo '| getvaluecookie | '.$cookie['email'].$cookie['admin'];
 
         return $cookie;
 
     }
 
-    private function setCookie($paramEmail, $paramType) {
+    private function setCookie($paramDBData) {
+        echo '| setvaluecoookie |'.$paramDBData['email'].$paramDBData['admin'];
 
         // setto il cookie
         $usession = USingleton::getInstances('USession');
-        $usession->setValue('email', $paramEmail);
-        $usession->setValue('user_type', $paramType);
+        $usession->setValue('email', $paramDBData['email']);
+        $usession->setValue('admin', $paramDBData['admin']);
 
     }
 
@@ -96,6 +109,7 @@ class CUtente {
         // prendo i dati dal db in base al nome utente
         $user_db = new FUtente();
         $user_load = $user_db->load($user_data['email']);
+        echo $user_load['email'];
 
         if ($user_load == false) {
             $this->errore_generico = 'email non presente';
@@ -111,13 +125,13 @@ class CUtente {
     private function checkUserAndPsw($inputData, $dbData) {
 
         $flag = false;
-
         // mi riporto la password nel formato memorizzato sul db
         $inputPassword = $this->maskPassword($inputData['password']);
+//        echo $inputPassword;
 
-        if ($inputData['email'] == $dbData->email && $inputPassword == $dbData->password) {
-
-            $this->setCookie($dbData->email, $dbData->admin);
+        if ($inputData['email'] == $dbData['email'] && $inputPassword == $dbData['password']) {
+            // setto cookie e flag per il controllo della view
+            $this->setCookie($dbData);
             $flag = true;
 
         } else {
@@ -127,9 +141,53 @@ class CUtente {
         return $flag;
     }
 
-    private function maskPassword($paramPassword) {
+    public function maskPassword($paramPassword) {
         // la concateno col SALT e ne faccio l'hash
+        $temp = sha1(FSalt::$SALT.$paramPassword);
+        echo $temp;
         return sha1(FSalt::$SALT.$paramPassword);
+    }
+
+    private function richiestaRegistrazione() {
+
+        $flag = '';
+
+        $vutente = USingleton::getInstances('VUtente');
+        $datiRegistrazione = $vutente->getDatiUtente();
+
+        if (!$this->checkIfExists($datiRegistrazione['email'])) {
+            // l'utente non esiste quindi
+            $flag = $this->creaUtente($datiRegistrazione);
+        } else {
+            // altrimenti setto l'errore
+            $this->errore_generico = 'Email inserita in fase di registrazione presente, provare ad effettuare il login';
+            $flag = "presente";
+        }
+
+        return $flag;
+
+    }
+
+    private function checkIfExists($paramEmail) {
+        // controllo se l'utente è già registrato
+        $user = new FUtente();
+        $user_load = $user->load($paramEmail);
+        if ($user_load['email'] == false) {
+            return false;
+        } else {
+            echo 'esiste';
+            return true;
+        }
+
+    }
+
+    private function creaUtente($paramDatiUtente) {
+        // carico i dati dell'utente sul db
+        $user = new FUtente();
+        $insertResult = $user->addUser($paramDatiUtente);
+
+        return $insertResult;
+
     }
 
     public function esitoLogin($paramEsito) {
@@ -139,6 +197,7 @@ class CUtente {
         $template = '';
         if ($paramEsito != false) {
             // imposto il layout con la redirect
+            $vutente->setRedirectText('Accesso effettuato, stai per essere reindirizzato alla home...');
             $template = $vutente->processaTemplateUtente('redirect');
         } else {
             // reimposto il layout di login con l'errore
@@ -147,6 +206,32 @@ class CUtente {
         }
         return $template;
 
+    }
+
+    public function esitoRegistrazione($paramEsito) {
+
+        $vutente = USingleton::getInstances('VUtente');
+        $template = '';
+        echo $paramEsito;
+
+        if ($paramEsito == 'presente') {
+            // importo il layout di login
+            $vutente->setErroreLogin($this->errore_generico);
+            $template = $vutente->processaTemplateUtente('login');
+        } else {
+
+            if ($paramEsito == false) {
+                // imposto l'errore e torno alla schermata di registrazione
+                $vutente->setErroreRegistrazione($this->errore_generico);
+                $template = $vutente->processaTemplateUtente('registrazione');
+            } else {
+                // registrazione andata a buon fine, imposto la redirect
+                $vutente->setRedirectText('Registrazione effettuata, riceverai una mail ');
+                $template = $vutente->processaTemplateUtente('redirect');
+            }
+        }
+
+        return $template;
     }
 
     private function proceduraLogout() {

@@ -53,7 +53,6 @@ class VHome extends View {
     }
 
     public function setUtente($userParam) {
-
         // assegno il nome
         $this->assign('nome_utente', $userParam);
 

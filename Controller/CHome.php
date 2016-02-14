@@ -17,10 +17,12 @@ class CHome {
         $cutente = USingleton::getInstances('CUtente');
         $exist = $cutente->getUser();
         // gli assegno la navbar
+        echo 'laaaaaaaaaaaaaa'.$exist['email'];
         if (!$exist) {
             $vhome->setOspite();
         } else {
-            $vhome->setUtente($exist);
+            echo 'looooooooooooool'.$exist['email'];
+            $vhome->setUtente($exist['email']);
         }
 
         $vhome->setContent($tmp);
