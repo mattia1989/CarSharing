@@ -13,8 +13,7 @@ function validaForm() {
 
     function settaErrore(varPsw) {
         // setto la label spopra al form (o sotto, poi vedo dove metterla)
-        var label = document.getElementById('login_error_label');
-        label.value = 'errore dati';
+        alert('errore dati');
         varPsw.value = '';
         return false;
     }
@@ -33,7 +32,7 @@ function validaForm() {
     check = new Array();
     check[0] = isEmpy(_email, _psw);
     check[1] = calcolaHash(_psw);
-    //check[2] = $().form();
+    //check[2] = $().form(); // check con jquery
 
     for (i = 0; i < check.length; i++) {
         if (check[i] == false) {

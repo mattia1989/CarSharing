@@ -45,8 +45,8 @@ class CUtente {
 
             case 'redirectpsw':
                 // devo controllare se è nel db:
-                // YES: invio la mail e redirect alla pagina di redirect
-                // NO: inserisco l'errore in quella stessa pagina
+                $flag = $this->richiestaRecupero();
+                return $this->esitoRecupero($flag);
                 break;
 
             case 'area_utente':
@@ -72,24 +72,20 @@ class CUtente {
         return $this->errore_generico;
     }
 
-    /* METHOD */
-
-    public function getUser() {
-
-        $cookie = false;
+    public function getCookie() {
         // recupero il valore dal cookie
+        $cookie = false;
         $usession = USingleton::getInstances('USession');
-        $cookie = $usession->getValue('email');
-        $cookie = $usession->getValue('admin');
-        echo '| getvaluecookie | '.$cookie['email'].$cookie['admin'];
+        $cookie['email'] = $usession->getValue('email');
+        $cookie['admin'] = $usession->getValue('admin');
 
         return $cookie;
 
     }
 
-    private function setCookie($paramDBData) {
-        echo '| setvaluecoookie |'.$paramDBData['email'].$paramDBData['admin'];
+    /* METHOD */
 
+    private function setCookie($paramDBData) {
         // setto il cookie
         $usession = USingleton::getInstances('USession');
         $usession->setValue('email', $paramDBData['email']);
@@ -143,8 +139,8 @@ class CUtente {
 
     public function maskPassword($paramPassword) {
         // la concateno col SALT e ne faccio l'hash
-        $temp = sha1(FSalt::$SALT.$paramPassword);
-        echo $temp;
+//        $temp = sha1(FSalt::$SALT.$paramPassword);
+//        echo $temp;
         return sha1(FSalt::$SALT.$paramPassword);
     }
 
@@ -161,7 +157,22 @@ class CUtente {
         } else {
             // altrimenti setto l'errore
             $this->errore_generico = 'Email inserita in fase di registrazione presente, provare ad effettuare il login';
-            $flag = "presente";
+            $flag = '2';
+        }
+
+        return $flag;
+
+    }
+
+
+    private function richiestaRecupero() {
+        // recupero l'indirizzo dalla view
+        $vutente = USingleton::getInstances('VUtente');
+        $userEmail = $vutente->getEmailRecupero();
+        $flag = $this->checkIfExists($userEmail);
+        if ($flag == false) {
+            // setto l'errore
+            $this->errore_generico = 'utente non esistente';
         }
 
         return $flag;
@@ -212,23 +223,45 @@ class CUtente {
 
         $vutente = USingleton::getInstances('VUtente');
         $template = '';
-        echo $paramEsito;
 
-        if ($paramEsito == 'presente') {
-            // importo il layout di login
-            $vutente->setErroreLogin($this->errore_generico);
-            $template = $vutente->processaTemplateUtente('login');
-        } else {
+        switch ($paramEsito) {
 
-            if ($paramEsito == false) {
-                // imposto l'errore e torno alla schermata di registrazione
+            case 0:
+                // false: imposto l'errore e torno alla schermata di registrazione
                 $vutente->setErroreRegistrazione($this->errore_generico);
                 $template = $vutente->processaTemplateUtente('registrazione');
-            } else {
-                // registrazione andata a buon fine, imposto la redirect
-                $vutente->setRedirectText('Registrazione effettuata, riceverai una mail ');
+                break;
+
+            case 1:
+                // true: INVIO L'EMAIL ed imposto la redirect
+                $vutente->setRedirectText('Registrazione effettuata, controlla l\'emial per completare la registrazione ed attivare l\'account');
                 $template = $vutente->processaTemplateUtente('redirect');
-            }
+                break;
+
+            case 2:
+                // esiste: importo il layout di login
+                $vutente->setErroreLogin($this->errore_generico);
+                $template = $vutente->processaTemplateUtente('login');
+                break;
+
+        }
+
+        return $template;
+    }
+    private function esitoRecupero($paramEsito) {
+
+        $template = '';
+        $vutente = USingleton::getInstances('VUtente');
+
+        if ($paramEsito == true) {
+            // YES: invio la mail e redirect alla pagina di redirect
+            // DEVO ANCORA SCRIVERE L'INVIO DELL'EMAIL
+            $vutente->setRedirectText('Procedura di recupero effettuata, ti abbiamo inviato una email...');
+            $template = $vutente->processaTemplateUtente('redirect');
+        } else {
+            // NO: inserisco l'errore e torno alla medesima pagina
+            $vutente->setErroreRecupero($this->errore_generico);
+            $template = $vutente->processaTemplateUtente('recuperapsw');
         }
 
         return $template;
@@ -239,6 +272,7 @@ class CUtente {
         // cancello i cookie
         $usession = USingleton::getInstances('USession');
         $usession->removeValue('email');
+        $usession->removeValue('admin');
         return $usession->destroySession();
 
     }

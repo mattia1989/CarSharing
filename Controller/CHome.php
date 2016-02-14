@@ -15,13 +15,11 @@ class CHome {
         $tmp = $this->smista('mail@gmail.com');
         // controllo se esiste l'utente
         $cutente = USingleton::getInstances('CUtente');
-        $exist = $cutente->getUser();
+        $exist = $cutente->getCookie();
         // gli assegno la navbar
-        echo 'laaaaaaaaaaaaaa'.$exist['email'];
-        if (!$exist) {
+        if (!$exist['email']) {
             $vhome->setOspite();
         } else {
-            echo 'looooooooooooool'.$exist['email'];
             $vhome->setUtente($exist['email']);
         }
 
