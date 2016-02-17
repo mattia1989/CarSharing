@@ -14,7 +14,7 @@
     <ul>
         <div id="navbar_search">
             <!-- vado alla pagina di ricerca -->
-            <a href="">DEVI PARTIRE? CLICCA QUI!</a>
+            <a href="?controller=mezzo&task=lista_mezzi">DEVI PARTIRE? CLICCA QUI!</a>
         </div>
     </ul>
 </nav>

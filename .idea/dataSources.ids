@@ -21,39 +21,36 @@
       <table id="4" parent="1" name="Prenotazione"/>
       <table id="5" parent="1" name="Prenotazione_Parcheggio"/>
       <table id="6" parent="1" name="Utente"/>
-      <column id="7" parent="2" name="id">
+      <table id="7" parent="1" name="UserRecovery"/>
+      <column id="8" parent="2" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="8" parent="2" name="targa">
+      <column id="9" parent="2" name="targa">
         <mandatory>1</mandatory>
         <data-type>varchar(7)</data-type>
       </column>
-      <column id="9" parent="2" name="modello">
+      <column id="10" parent="2" name="modello">
         <mandatory>1</mandatory>
         <data-type>varchar(30)</data-type>
       </column>
-      <column id="10" parent="2" name="cilindrata">
+      <column id="11" parent="2" name="cilindrata">
         <mandatory>1</mandatory>
         <data-type>double</data-type>
       </column>
-      <column id="11" parent="2" name="carburante">
+      <column id="12" parent="2" name="carburante">
         <mandatory>1</mandatory>
         <data-type>enum(&apos;Benzina&apos;, &apos;GPL&apos;, &apos;Metano&apos;, &apos;Diesel&apos;, &apos;Ibrida&apos;)</data-type>
       </column>
-      <column id="12" parent="2" name="km">
+      <column id="13" parent="2" name="km">
         <mandatory>1</mandatory>
         <data-type>double</data-type>
       </column>
-      <column id="13" parent="2" name="colore">
+      <column id="14" parent="2" name="colore">
         <mandatory>1</mandatory>
         <data-type>varchar(20)</data-type>
       </column>
-      <column id="14" parent="2" name="prezzo_giornaliero">
-        <mandatory>1</mandatory>
-        <data-type>double</data-type>
-      </column>
-      <column id="15" parent="2" name="prezzo_orario">
+      <column id="15" parent="2" name="prezzo_giornaliero">
         <mandatory>1</mandatory>
         <data-type>double</data-type>
       </column>
@@ -197,6 +194,18 @@ parcheggioID</columns>
         <underlying-index>email</underlying-index>
       </key>
       <key id="49" parent="6" name="PRIMARY">
+        <columns>email</columns>
+        <primary>1</primary>
+      </key>
+      <column id="50" parent="7" name="email">
+        <mandatory>1</mandatory>
+        <data-type>varchar(25)</data-type>
+      </column>
+      <column id="51" parent="7" name="requestcode">
+        <mandatory>1</mandatory>
+        <data-type>varchar(256)</data-type>
+      </column>
+      <key id="52" parent="7" name="PRIMARY">
         <columns>email</columns>
         <primary>1</primary>
       </key>

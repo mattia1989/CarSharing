@@ -11,8 +11,9 @@ class CHome {
         // perché non si vede neanche la home???
 
         $vhome = USingleton::getInstances('VHome');
+        $usession = USingleton::getInstances('USession');
         // ripesco il template di base
-        $tmp = $this->smista('mail@gmail.com');
+        $tmp = $this->smista($usession->getValue('email'));
         // controllo se esiste l'utente
         $cutente = USingleton::getInstances('CUtente');
         $exist = $cutente->getCookie();
@@ -20,7 +21,11 @@ class CHome {
         if (!$exist['email']) {
             $vhome->setOspite();
         } else {
-            $vhome->setUtente($exist['email']);
+            if ($exist['admin'] == 0) {
+                $vhome->setUtente($exist['email']);
+            } else {
+                $vhome->setAdmin($exist['email']);
+            }
         }
 
         $vhome->setContent($tmp);
@@ -44,7 +49,10 @@ class CHome {
                 $vhome->setContent($tmp);
                 break;
                 
-            case 'mezzi':
+            case 'mezzo':
+                $cmezzo = USingleton::getInstances('CMezzo');
+                $tmp = $cmezzo->smista();
+                $vhome->setContent($tmp);
                 break;
             
             case 'parcheggi':

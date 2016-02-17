@@ -8,6 +8,10 @@
             <a href="?controller=utente&task=area_utente">AREA PERSONALE</a>
         </li>
         <li>
+            <!-- qui inverisco il link al pannello da amministratore -->
+            <a href="?controller=utente&task=area_amministratore">AREA AMMINISTRATORE</a>
+        </li>
+        <li>
             <!-- il prossimo link deve settare il template di accesso -->
             <a href="?controller=utente&task=logout">ESCI</a>
         </li>

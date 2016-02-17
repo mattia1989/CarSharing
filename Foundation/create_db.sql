@@ -48,3 +48,8 @@ CREATE TABLE carsharing2.Prenotazione_Parcheggio (
   CONSTRAINT `prenotazione` FOREIGN KEY (id_prenotazione) REFERENCES carsharing2.Prenotazione(id),
   CONSTRAINT `parcheggio` FOREIGN KEY (id_parcheggio) REFERENCES carsharing2.Parcheggio(id)
 ) ENGINE = InnoDB;
+
+CREATE TABLE carsharing2.UserRecovery (
+  email VARCHAR(25) NOT NULL PRIMARY KEY,
+  requestcode VARCHAR(256) NOT NULL
+) ENGINE = InnoDB;

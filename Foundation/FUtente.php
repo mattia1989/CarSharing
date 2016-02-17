@@ -57,6 +57,22 @@ class FUtente extends FDatabase {
 
     }
 
+    public function activateUser($paramEmail) {
+        // attivo l'utente anche sul db
+        $query = 'UPDATE '.$this->table.' SET stato = TRUE WHERE '.$this->keytable.' = \''.$paramEmail.'\';';
+
+        return $this->executeQuery($query);
+
+    }
+
+    public function updateUserPassword($paramEmail, $paramPassword) {
+        // aggiorno solo la password
+        $query = 'UPDATE '.$this->table.' SET password = \''.$paramPassword.'\' WHERE '.$this->keytable.' = \''.$paramEmail.'\';';
+
+        return $this->executeQuery($query);
+
+    }
+
 }
 
 ?>

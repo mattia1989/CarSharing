@@ -63,6 +63,16 @@ class VHome extends View {
 
     }
 
+    public function setAdmin($userParam) {
+        $this->assign('nome_utente', $userParam);
+
+        $template = $this->processaLogbar('admin');
+        $this->assign('navbar', $template);
+        $this->assign('content', $this->_content);
+        $this->assign('bottom', 'MDL');
+
+    }
+
     public function processaTemplate($paramTplName) {
         return $this->fetch('./templates/'.$paramTplName.'.tpl');
     }

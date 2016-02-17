@@ -89,7 +89,6 @@ class FDatabase {
 
         $this->result = mysqli_query($this->connessione, $paramQuery) or die("Impossibile effettuare la query: "
                 . mysqli_error($this->connessione));
-        echo $temp = $this->result ? ' | | | true | | | | ' : '| | | false | | | ';
 
         if (!$this->result) {
             // non andata a buon fine
@@ -109,19 +108,17 @@ class FDatabase {
 
     protected function getQueryResult() {
         // controllo quanti elementi sono
-        if (count($this->result) > 1) {
+        if (mysqli_num_rows($this->result) > 1) {
             return $this->getArrayObject();
         } else {
             return $this->getObject();
         }
+
     }
 
     private function getObject() {
         // mi faccio tornare il singolo array associativo
-
-//        $temp = mysqli_fetch_assoc($this->result);
         return mysqli_fetch_assoc($this->result);
-//        return $temp;
     }
 
     private function getArrayObject() {
@@ -166,9 +163,17 @@ class FDatabase {
         }
 
         $colonne = substr($colonne, 0, strlen($colonne) - 2);
-        $valori = substr($valori, 0, strlen($valori) - 2);
+        $valori = substr($valori, 0, strlen($valori) - 3);
 
         $query = 'INSERT INTO '.$this->table.' ('.$colonne.') VALUE ('.$valori.');';
+
+        return $this->executeQuery($query);
+
+    }
+
+    public function deleteRow($key) {
+        // rimuove la riga dal db in base alla chiave primaria
+        $query = 'DELETE FROM '.$this->table.' WHERE '.$this->keytable.' = \''.$key.'\';';
 
         return $this->executeQuery($query);
 
