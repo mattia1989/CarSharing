@@ -1,7 +1,5 @@
 <!-- CSS -->
 
-<link rel="stylesheet" href="./css/Autenticazione_default.css">
-
 <!-- SCRIPT -->
 
 <script type="text/javascript" src="./js/Autenticazione_validate_jquery.js"></script>
@@ -29,7 +27,7 @@
             <a href="?controller=utente&task=recuperapsw" id="psw_dimenticata_link">Non ricordo la password.</a>
         </span>
         <div class="input_field" id="login_error">
-            <label id="login_error_label">{$login_error}</label>
+            <label class="error_field" id="login_error_label">{$login_error}</label>
         </div>
         <input type="hidden" name="controller" value="utente"/>
         <input type="hidden" name="task" value="autentica"/>

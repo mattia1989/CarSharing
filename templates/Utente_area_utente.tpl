@@ -6,7 +6,7 @@
             <input class="input_field" type="text" name="email" value="{$user_data_email}" />
             <br>
             <div>
-                <form id="form_user_psw_id" class="input_field" method="get">
+                <form id="form_user_psw_id" class="input_field" method="get" action="./index.php">
                     <input type="hidden" name="controller" value="utente" />
                     <input type="hidden" name="task" value="redirectpsw" />
                     <input type="hidden" name="email_recupero" value="{$user_data_email}" />

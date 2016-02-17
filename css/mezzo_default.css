@@ -1,0 +1,16 @@
+#left_zone
+{
+
+    height: 100%;
+    width: 20%px;
+    background-color: red;
+    float: left;
+    border: double;
+    border-color: white;
+
+}
+
+#menu_laterale
+{
+    font-family: "Arial Black";
+}

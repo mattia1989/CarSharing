@@ -94,3 +94,21 @@ body
     background-color: grey;
     
 }
+
+.input_field
+{
+
+    margin: 15px;
+    font-family: "Courier New";
+
+}
+
+.error_field
+{
+
+    margin: 15px;
+    color: red;
+    font-size: 20px;
+    font-family: "Comic Sans MS";
+
+}

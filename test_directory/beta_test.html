@@ -4,18 +4,33 @@
 
     <meta charset="UTF-8">
     <title>My Test HTML Page</title>
-    <script rel="stylesheet" type="text/css" src="beta.css" ></script>
-    <script rel="script" type="text/javascript" src="./test.js"></script>
+    <link rel="stylesheet" type="text/css" href="./tagcss.css">
+
+    <script type="javascript" src="jquery/js/jquery.js" ></script>
+    <script type="javascript" src="jquery/js/jquery.validate.js" ></script>
+    <!--<script type="javascript" src="jquery/js/validatortest.js" ></script>-->
 
 </head>
 <body>
 <a href="http://www.google.it" >jQuery</a>
 <div>
-    <form name="input_test" method="get" action="beta_test.html" onsubmit="valida();" >
-        <input type="text" name="test_input" id="test_input_id"/>
-        <input type="submit" class="input_class" id="test_button" value="Test button" />
+    <form name="form_test" id="form_test" class="test_class" method="get" action="" >
+        <input type="text" class="test_class" name="test_input" id="test_input" required />
+        <input type="submit" class="test_class" name="test_button" id="test_button" value="TEST BUTTON" />
     </form>
 </div>
 
 </body>
+
+<script>
+    var form = $("#test_input");
+    form.rules( 'add', {
+        required: true,
+        message: {
+            required: "inserire per forza"
+        }
+    });
+
+    form.validate();
+</script>
 </html>

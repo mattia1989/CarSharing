@@ -92,10 +92,12 @@ class VMezzo extends View {
             }
         }
 
+        // assegno la barra laterale
+        $this->impostaBarraLateraleTemplateMezzo();
         $this->assign('list', $lista);
         $template = $this->processaTemplateMezzo('lista');
 
-        return $this->impostaZoneTemplateMezzo($template);
+        return $this->impostaZonaCentraleTemplateMezzo($template);
 
     }
 
@@ -107,7 +109,7 @@ class VMezzo extends View {
         }
 
         $template = $this->processaTemplateMezzo('specifiche');
-        return $this->impostaZoneTemplateMezzo($template);
+        return $this->impostaZonaCentraleTemplateMezzo($template);
 
     }
 
@@ -117,11 +119,16 @@ class VMezzo extends View {
 
     }
 
-    private function impostaZoneTemplateMezzo($paramCenterZone) {
+    private function impostaZonaCentraleTemplateMezzo($paramCenterZone) {
         // riempio il template di base
         $this->assign('center_zone', $paramCenterZone);
         return $this->fetch('./templates/Mezzo_default.tpl');
 
+    }
+
+    private function impostaBarraLateraleTemplateMezzo() {
+        // assegno la barra laterale
+        $this->assign('left_zone', $this->processaTemplateMezzo('barralaterale'));
     }
 
 }
