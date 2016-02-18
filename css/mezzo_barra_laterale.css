@@ -1,0 +1,10 @@
+#menu_laterale
+{
+    display: block;
+}
+
+.elemento_laterale
+{
+    font-size: 25px;
+    font-family: Verdana;
+}

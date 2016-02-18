@@ -1,8 +1,8 @@
 #left_zone
 {
 
-    height: 100%;
-    width: 20%px;
+    height: 1125px;
+    width: 20%;
     background-color: red;
     float: left;
     border: double;

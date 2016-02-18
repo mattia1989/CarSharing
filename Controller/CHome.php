@@ -57,6 +57,9 @@ class CHome {
             
             case 'parcheggi':
                 break;
+
+            case 'prenotazioni':
+                break;
             
             default:
                 return $vhome->processaTemplate('Home_default');

@@ -49,6 +49,14 @@
         <div id="bottom">
             {$bottom}
         </div>
+
+        <!-- Javascript Disattivato -->
+        <noscript>
+            <div class="javascriptdisattivato">
+                <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/><br/> <br/> <br/> <br/> <br/>
+                HAI JAVASCRIPT DISATTIVATO: <br/> <br/> PER UTILIZZARE L'APPLICAZIONE DEVI ATTIVARLO OPPURE AGGIORNARE IL TUO BROWSER AD UNA VERSIONE RECENTE.
+            </div>
+        </noscript>
         
     </body>
     

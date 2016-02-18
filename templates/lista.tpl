@@ -1,7 +1,7 @@
-<ul id="list">
+<div id="list">
     {foreach $list as $list_element}
-        <li>
+        <div>
             {$list_element}
-        </li>
+        </div>
     {/foreach}
-</ul>
+</div>

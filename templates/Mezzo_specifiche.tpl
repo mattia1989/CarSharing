@@ -1,32 +1,41 @@
+<!-- CSS -->
+
+<link rel="stylesheet" type="text/css" href="./css/mezzo_specifiche.css">
+
+<!-- TEMPLATE -->
+
 <div>
-    <span id="img_mezzo">
-        {$immagine}
+    {*<span id="img_mezzo">*}
+        {*{$immagine}*}
+    {*</span>*}
+    <span id="specifiche_mezzo_image">
+        qui va l'immagine
     </span>
-    <span id="specifiche_id">
-        <div id="idMezzo_id">
+    <span class="specifiche_mezzo">
+        <div>
             ID Mezzo: {$id}
         </div>
-        <div id="modello_id">
+        <div>
             Modello: {$modello}
         </div>
-        <div id="targa_id">
+        <div>
             Targa: {$targa}
         </div>
-        <div id="cilindrata_id">
+        <div>
             Cilindrata: {$cilindrata} cc
         </div>
-        <div id="carburante_id">
+        <div>
             Carburante: {$carburante}
         </div>
-        <span id="prezzo_id">
+        <span>
             Prezzo giornalier: {$prezzo_giornaliero}
         </span>
-        <div>
-            <form name="specifiche_mezzo_form" onsubmit="./index.php">
-                <input type="hidden" name="controller" value="mezzo" />
-                <input type="hidden" name="task" value="lista_mezzi" />
-                <input type="submit" name="get_lista_mezzo" value="Torna alla lista mezzi" />
-            </form>
-        </div>
     </span>
-</div>
+    <span id="button_specifiche">
+        <form name="specifiche_mezzo_form" onsubmit="./index.php">
+            <input type="hidden" name="controller" value="mezzo" />
+            <input type="hidden" name="task" value="lista_mezzi" />
+            <input type="submit" name="get_lista_mezzo" value="Torna alla lista mezzi" />
+        </form>
+    </span>
+</d>

@@ -20,6 +20,18 @@ class CMezzo {
                 $tempMezzo = $this->getMezzoFromRequest();
                 return $vmezzo->impostaTemplateSpecificheMezzo($tempMezzo);
                 break;
+
+            case 'aggiungi_mezzo':
+                // devo tornare al pannello d'amministrazione
+                break;
+
+            case 'rimuovi_mezzo':
+                // devo tornare al pannello d'amministrazione
+                break;
+
+            case 'modifica_mezzo':
+                // devo tornare al pannello d'amministrazione
+            break;
         }
 
     }

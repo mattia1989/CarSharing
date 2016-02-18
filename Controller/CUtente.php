@@ -87,6 +87,14 @@ class CUtente {
                 UEmail::sendMail('matt.1989@yahoo.it', 'mattia', 'beta test subject', 'testo della email di prova');
                 return $vutente->processaTemplateUtente('redirect');
 
+            case 'modifica_utente':
+                // devo tornare al pannello d'amministrazione
+                break;
+            
+            case 'cancella_utente':
+                // devo tornare al pannello d'amministrazione
+                break;
+
         }
     }
 
@@ -280,7 +288,6 @@ class CUtente {
         echo $paramEmail.$paramRequestcode;
         $fuserRecover = new FUserRecovery();
         $fuserRecoverload = $fuserRecover->load($paramEmail);
-        echo '| | | '.$fuserRecoverload['email'].$fuserRecoverload['requestcode'].' | | | ';
         if ($fuserRecoverload['requestcode'] == $paramRequestcode) {
             // l'ho trovato quindi setto il flag a 1 e levo il link dalla tabella
             return $fuserRecover->deleteRow($paramEmail);
@@ -515,7 +522,6 @@ class CUtente {
 
     private function updateUserPsw($paramEmail, $paramNewPassword) {
         // aggiorno la nuova password nel db
-        echo $paramEmail.'$$$'.$paramNewPassword;
         $futente = new FUtente();
         $esito = $futente->updateUserPassword($paramEmail, $this->maskPassword($paramNewPassword));
 

@@ -71,7 +71,7 @@ class VMezzo extends View {
         $this->assign('carburanteMezzo', $paramMezzo['carburante']);
         $this->assign('prezzoMezzo', $paramMezzo['prezzo_giornaliero']);
 
-        return $this->fetch('./templates/element.tpl');
+        return $this->fetch('./templates/Mezzo_element.tpl');
 
     }
 
@@ -92,10 +92,8 @@ class VMezzo extends View {
             }
         }
 
-        // assegno la barra laterale
-        $this->impostaBarraLateraleTemplateMezzo();
         $this->assign('list', $lista);
-        $template = $this->processaTemplateMezzo('lista');
+        $template = $this->fetch('./templates/lista.tpl');
 
         return $this->impostaZonaCentraleTemplateMezzo($template);
 
@@ -120,7 +118,9 @@ class VMezzo extends View {
     }
 
     private function impostaZonaCentraleTemplateMezzo($paramCenterZone) {
-        // riempio il template di base
+        // assegno la barra laterale
+        $this->impostaBarraLateraleTemplateMezzo();
+        // riempio la zona centrale
         $this->assign('center_zone', $paramCenterZone);
         return $this->fetch('./templates/Mezzo_default.tpl');
 

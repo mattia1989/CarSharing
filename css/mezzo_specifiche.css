@@ -1,0 +1,16 @@
+#specifiche_mezzo_image
+{
+    float: right;
+    padding: 20px;
+}
+
+.specifiche_mezzo
+{
+    float: left;
+    padding: 20px;
+}
+
+#button_specifiche
+{
+    float: right;
+}
