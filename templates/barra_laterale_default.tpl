@@ -12,6 +12,6 @@
         <a href="" id="cerca_viaggio_redirect" >Cerca viaggio</a>
     </div>
     <div class="elemento_laterale">
-        <a href="" id="pacheggi_redirect" >Lista parcheggi</a>
+        <a href="./index.php?controller=parcheggio&task=lista_parcheggi_utente" id="pacheggi_redirect" >Lista parcheggi</a>
     </div>
 </div>

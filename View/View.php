@@ -23,10 +23,37 @@ class View extends Smarty {
         
     }
 
+    public function getController() {
+        if(isset($_REQUEST['controller'])) {
+            return $_REQUEST['controller'];
+        } else {
+            return false;
+        }
+    }
+
+    public function getTask() {
+        if(isset($_REQUEST['task'])) {
+            return $_REQUEST['task'];
+        } else {
+            return false;
+        }
+    }
 
     public function setRedirectText($paramText) {
         $this->assign('redirect_text', $paramText);
         return $this->fetch('./templates/redirect.tpl');
+    }
+
+    /* METHOD */
+
+    protected function impostaBarraLateraleTemplate($paramType) {
+        // assegno la barra laterale
+        if ($paramType == 'default') {
+            $this->assign('left_zone', $this->fetch('./templates/barra_laterale_default.tpl'));
+        } else {
+            $vutente = USingleton::getInstances('VUtente');
+            $this->assign('left_zone', $this->fetch('./templates/barra_laterale_admin.tpl'));
+        }
     }
     
 }

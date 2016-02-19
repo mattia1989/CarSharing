@@ -11,28 +11,6 @@ class VMezzo extends View {
 
     /* GETTER */
 
-    public function getTask()
-    {
-
-        if (isset($_REQUEST['task'])) {
-            return $_REQUEST['task'];
-        } else {
-            return false;
-        }
-
-    }
-
-    public function getController()
-    {
-
-        if (isset($_REQUEST['controller'])) {
-            return $_REQUEST['controller'];
-        } else {
-            return false;
-        }
-
-    }
-
     public function getDatiMezzo() {
 
         $vmezzo = USingleton::getInstances('VMezzo');
@@ -82,25 +60,6 @@ class VMezzo extends View {
             return $immagine;
 
         }
-
-//        if( ( !empty( $_FILES["immagine"] ) ) && ( $_FILES['immagine']['error'] == 0 ) ) {
-//
-//            $path = 'tmp/' . basename( $_FILES['immagine']['name'] );
-//
-//            if( move_uploaded_file($_FILES['immagine']['tmp_name'], $path) ){
-//                print_r( $_FILES['immagine'] ); /* File salvato correttamente */
-//                return $_FILES['immagine'];
-//            }else{
-//                print "Impossibile salvare il file: " . $_FILES['my_file']['error'];
-//                return 'caricamento non riuscito';
-//            }
-//
-//        }else{
-//            return 'no value';
-//        }
-
-
-
 
     }
 
@@ -178,7 +137,7 @@ class VMezzo extends View {
         $this->assign('list', $lista);
         $template = $this->fetch('./templates/lista.tpl');
 
-        return $this->impostaZonaCentraleTemplateMezzo($template);
+        return $this->impostaZonaCentraleTemplateMezzo($template, $paramType);
 
     }
 
@@ -189,7 +148,7 @@ class VMezzo extends View {
         }
 
         $template = $this->processaTemplateMezzo('specifiche');
-        return $this->impostaZonaCentraleTemplateMezzo($template);
+        return $this->impostaZonaCentraleTemplateMezzo($template, 'default');
 
     }
 
@@ -199,18 +158,13 @@ class VMezzo extends View {
 
     }
 
-    private function impostaZonaCentraleTemplateMezzo($paramCenterZone) {
+    private function impostaZonaCentraleTemplateMezzo($paramCenterZone, $paramType) {
         // assegno la barra laterale
-        $this->impostaBarraLateraleTemplateMezzo();
+        $this->impostaBarraLateraleTemplate($paramType);
         // riempio la zona centrale
         $this->assign('center_zone', $paramCenterZone);
-        return $this->fetch('./templates/Mezzo_default.tpl');
+        return $this->fetch('./templates/center_default.tpl');
 
-    }
-
-    private function impostaBarraLateraleTemplateMezzo() {
-        // assegno la barra laterale
-        $this->assign('left_zone', $this->processaTemplateMezzo('barralaterale'));
     }
 
 }

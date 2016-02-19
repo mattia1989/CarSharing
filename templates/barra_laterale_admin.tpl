@@ -1,18 +1,11 @@
 <!-- CSS -->
 
-<link rel="stylesheet" type="text/css" href="./css/barra_area_amministratore.css">
-<link rel="stylesheet" type="text/css" href="./css/dialog_aggiungi_utente.css">
-
-<!-- JAVASCRIPT -->
-
-<script type="text/javascript" src="./js/pannello_amministratore.js"></script>
-<script type="text/javascript" src="./jquery-ui-1.11.4.custom/jquery-ui.js"></script>
-<script type="text/javascript" src="./jquery/js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/barra_laterale_admin.css">
 
 <!-- TEMPLATE -->
 
 <h1>Area amministrativa</h1>
-<div id="barra_amministrazione">
+<div id="barra_laterale_amministrazione">
     <span>
         <span>
             <form id="form_aggiungi_parcheggio_id" name="aggiungi_parcheggio" method="get" action="./index.php">

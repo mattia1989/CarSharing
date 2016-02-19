@@ -127,8 +127,7 @@ class CMezzo {
         if ($flag) {
             return $vmezzo->setRedirectText('Mezzo rimosso');
         } else {
-//            $vmezzo->setErrorList('Cancellamento non riuscito');
-            return $vmezzo->impostaTemplateLista('amministrazione');
+            return $vmezzo->setRedirectText('Operazione non riuscita');
         }
     }
 

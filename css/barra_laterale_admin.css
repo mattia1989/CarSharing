@@ -1,0 +1,10 @@
+#barra_laterale_amministrazione
+{
+    display: block;
+}
+
+.elemento_laterale_admin
+{
+    font-size: 25px;
+    font-family: Verdana;
+}

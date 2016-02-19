@@ -49,4 +49,9 @@
             <input type="submit" class="input_field" value="SALVA" />
         </div>
     </form>
+    <form method="get" action="./index.php">
+        <input type="hidden" name="controller" value="mezzo" />
+        <input type="hidden" name="task" value="lista_mezzi_amministrazione" />
+        <input type="submit" class="input_field" name="return_button" value="Torna alla lista" />
+    </form>
 </div>

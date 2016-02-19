@@ -55,7 +55,10 @@ class CHome {
                 $vhome->setContent($tmp);
                 break;
             
-            case 'parcheggi':
+            case 'parcheggio':
+                $cparcheggio = USingleton::getInstances('CParcheggio');
+                $tmp = $cparcheggio->smista();
+                $vhome->setContent($tmp);
                 break;
 
             case 'prenotazioni':

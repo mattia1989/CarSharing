@@ -8,3 +8,6 @@
     <!-- qui invece devo inserire il foreach -->
     {$center_zone}
 </div>
+<div id="left_zone">
+    {$left_zone}
+</div>

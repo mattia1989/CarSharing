@@ -1,9 +1,5 @@
 #element_id
 {
-    display: block;
-}
-#user_data_email
-{
     border: double;
     background: whitesmoke;
     float: left;
@@ -12,12 +8,12 @@
     font-family: Calibri;
 }
 
-.utente_element
+.parcheggio_element
 {
     float: left;
 }
 
-#cancella_utente_id
+#button_visualizza_specifiche
 {
     float: left;
 }
