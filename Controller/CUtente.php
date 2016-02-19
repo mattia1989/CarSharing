@@ -2,7 +2,6 @@
 
 /**
  * Description of CUtente
- *
  * @author Mattia Di Luca
  */
 class CUtente {
@@ -47,6 +46,10 @@ class CUtente {
                 $flag = $this->attiva($vutente->getEmailGET(), $vutente->getRequestCode());
                 return $this->esitoAttiva($flag);
 
+            case 'attiva_admin_interface':
+                $flag = $this->attivaUtente($vutente->getEmail());
+                return $this->esitoAttivaUtente($flag);
+
             case 'recuperapsw':
                 return $vutente->processaTemplateUtente('recuperapsw');
                 break;
@@ -77,10 +80,14 @@ class CUtente {
                 return $vutente->processaTemplateUtente('area_amministratore');
                 break;
 
+            case 'lista_utenti':
+                return $vutente->impostaTemplateLista();
+                break;
+
             case 'logout':
                 $this->proceduraLogout();
-                $vutente->setRedirectText('Logout effettuato, stai per essere reindirizzato alla home...');
-                return $vutente->processaTemplateUtente('redirect');
+                return$vutente->setRedirectText('Logout effettuato, stai per essere reindirizzato alla home...');
+//                return $vutente->processaTemplateUtente('redirect');
                 break;
 
             case 'invia_mail_di_prova':
@@ -90,8 +97,10 @@ class CUtente {
             case 'modifica_utente':
                 // devo tornare al pannello d'amministrazione
                 break;
-            
-            case 'cancella_utente':
+
+            case 'cancella':
+                $flag = $this->richiestaRimuovi($vutente->getEmail());
+                return $this->esitoRimuovi($flag);
                 // devo tornare al pannello d'amministrazione
                 break;
 
@@ -103,8 +112,7 @@ class CUtente {
     /**
      * @return string
      */
-    public function getErroreGenerico()
-    {
+    public function getErroreGenerico() {
         return $this->errore_generico;
     }
 
@@ -305,7 +313,7 @@ class CUtente {
         $template = '';
         if ($paramEsito != false) {
             // imposto il layout con la redirect
-            $template = $vutente->setRedirect('Accesso effettuato, stai per essere reindirizzato alla home...');
+            $template = $vutente->setRedirectText('Accesso effettuato, stai per essere reindirizzato alla home...');
         } else {
             // reimposto il layout di login con l'errore
             $vutente->setErroreLogin($this->errore_generico); // perché non setta l'errore
@@ -330,7 +338,7 @@ class CUtente {
 
             case 1:
                 // true: INVIO L'EMAIL ed imposto la redirect
-                $template = $vutente->setRedirect('Registrazione effettuata, controlla l\'emial per completare la registrazione ed attivare l\'account');
+                $template = $vutente->setRedirectText('Registrazione effettuata, controlla l\'emial per completare la registrazione ed attivare l\'account');
                 break;
 
             case 2:
@@ -353,17 +361,17 @@ class CUtente {
 
             case '0': {
                 // qualcosa è andato storto
-                return $vutente->setRedirect('Si sono verificati dei problemi, stai per essere reindirizzato alla home');
+                return $vutente->setRedirectText('Si sono verificati dei problemi, stai per essere reindirizzato alla home');
             }
 
             case '1': {
                 // tutto ok
-                return $vutente->setRedirect('Email inviata, stai per essere reindirizzato alla home');
+                return $vutente->setRedirectText('Email inviata, stai per essere reindirizzato alla home');
             }
 
             case '2': {
                 // utente già attivo
-                return $vutente->setRedirect('Utente già attivo, stai per essere reindirizzato alla home');
+                return $vutente->setRedirectText('Utente già attivo, stai per essere reindirizzato alla home');
             }
         }
 
@@ -379,7 +387,7 @@ class CUtente {
             $stringResult = 'Si è verificato un errore, stai per essere reindirizzato alla home';
         }
 
-        return $vutente->setRedirect($stringResult);
+        return $vutente->setRedirectText($stringResult);
 
     }
 
@@ -398,12 +406,12 @@ class CUtente {
 
             case '1': {
                 // l'email è presente ma non sono riuscito a mandare l'email
-                return $vutente->setRedirect('Procedura di recupero non riuscita, stati per essere reindirizzato alla home');
+                return $vutente->setRedirectText('Procedura di recupero non riuscita, stati per essere reindirizzato alla home');
             }
 
             case '2': {
                 // procedura andata a buon fine
-                return $vutente->setRedirect('\'Procedura di recupero effettuata, ti abbiamo inviato una email...\'');
+                return $vutente->setRedirectText('\'Procedura di recupero effettuata, ti abbiamo inviato una email...\'');
             }
 
         }
@@ -418,7 +426,7 @@ class CUtente {
 
             case '0': {
                 // procedura non andata a buon fine
-                return $vutente->setRedirect('Link non valido, stai per essere reindirizzato alla home');
+                return $vutente->setRedirectText('Link non valido, stai per essere reindirizzato alla home');
             }
 
             case '1': {
@@ -437,7 +445,7 @@ class CUtente {
 
             case '0': {
                 // procedura interrotta, occorre ricominciare da capo
-                return $vutente->setRedirect('Si è verificato un problema, occorre riavviare la procedura');
+                return $vutente->setRedirectText('Si è verificato un problema, occorre riavviare la procedura');
             }
 
             case '1': {
@@ -454,16 +462,17 @@ class CUtente {
         $user = $this->getCookie();
         $userDB = new FUtente();
         $userload = $userDB->load($user['email']);
+
         // controllo il valore caricato e setto i dati sulla view
         $vutente = USingleton::getInstances('VUtente');
         $template = '';
 
         if (!$userload['email']) {
             // redirect alla pagina di redirect per la home
-            $template = $vutente->setRedirect('Utente non presente, stai per essere reindirizzato alla home...');
+            $template = $vutente->setRedirectText('Utente non presente, stai per essere reindirizzato alla home...');
         } else {
             // carico i dati sulla view
-            $template = $vutente->setUserData($userload, $userload['stato']);
+            $template = $vutente->setUserData($userload, 'utente');
         }
 
         return $template;
@@ -537,6 +546,61 @@ class CUtente {
         $usession->removeValue('admin');
         return $usession->destroySession();
 
+    }
+
+    private function richiestaRimuovi($paramUseremail) {
+        // controllo se esiste e nel caso faccio la drop
+        if ($this->checkIfExists($paramUseremail)) {
+            // cancello l'utenet
+            $futente = new FUtente();
+            return $futente->deleteRow($paramUseremail);
+        } else {
+            return $value = 'Email inesistente';
+        }
+
+    }
+
+    private function esitoRimuovi($paramFlag) {
+
+        $vutente = USingleton::getInstances('VUtente');
+        if($paramFlag) {
+            if ($paramFlag == 0) {
+                return $vutente->setRedirectText('Si è verificato un errore');
+            } else {
+                return $vutente->setRedirectText('Operazione effettutata');
+            }
+        } else {
+            return $vutente->setRedirectText($paramFlag);
+        }
+
+    }
+
+    private function attivaUtente($paramUserEmail) {
+        // controllo se esiste
+        echo $paramUserEmail;
+        $futente = new FUtente();
+        $esito = $futente->load($paramUserEmail);
+        if (!$esito['stato']) {
+            // lo attivo
+            return $futente->activateUser($paramUserEmail);
+        } else {
+            return $flag = 'Utente non esistente';
+        }
+
+    }
+
+    private function esitoAttivaUtente($paramFlag) {
+
+        $vutente = USingleton::getInstances('VUtente');
+        echo $paramFlag;
+        if($paramFlag != 0) {
+            if ($paramFlag == 1) {
+                return $vutente->setRedirectText('Operazione effettuata con successo');
+            } else {
+                return $vutente->setRedirectText('Si è verificato un errore');
+            }
+            return $vutente->setRedirectText('Utente non trovato');
+        }
     }
 
 }

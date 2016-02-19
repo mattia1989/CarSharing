@@ -136,6 +136,12 @@ class FDatabase {
         return $resultArray;
 
     }
+
+    public function getAllElement() {
+
+        $query = 'SELECT * FROM '.$this->table.';';
+        return $this->executeQuery($query);
+    }
     
     public function load($key) {
 
@@ -166,6 +172,7 @@ class FDatabase {
         $valori = substr($valori, 0, strlen($valori) - 3);
 
         $query = 'INSERT INTO '.$this->table.' ('.$colonne.') VALUE ('.$valori.');';
+//        echo $query;
 
         return $this->executeQuery($query);
 
