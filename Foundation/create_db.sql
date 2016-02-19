@@ -18,7 +18,8 @@ CREATE TABLE carsharing2.Mezzo (
   carburante VARCHAR(100) NOT NULL,
   km FLOAT NOT NULL,
   colore VARCHAR(20) NOT NULL,
-  prezzo_giornaliero FLOAT NOT NULL
+  prezzo_giornaliero FLOAT NOT NULL,
+  immagine MEDIUMBLOB NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE carsharing2.Parcheggio (

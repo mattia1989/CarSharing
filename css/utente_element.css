@@ -1,0 +1,19 @@
+#user_data_email
+{
+    border: double;
+    background: whitesmoke;
+    float: left;
+    width: 75%;
+    height: 10%;
+    font-family: Calibri;
+}
+
+.utente_element
+{
+    float: left;
+}
+
+#cancella_utente_id
+{
+    float: left;
+}

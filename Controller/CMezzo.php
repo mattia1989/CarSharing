@@ -14,19 +14,31 @@ class CMezzo {
         switch ($vmezzo->getTask()) {
 
             case 'lista_mezzi':
-                return $vmezzo->impostaTemplateLista();
+                return $vmezzo->impostaTemplateLista('default');
 
             case 'specifiche_mezzo':
                 $tempMezzo = $this->getMezzoFromRequest();
                 return $vmezzo->impostaTemplateSpecificheMezzo($tempMezzo);
                 break;
 
-            case 'aggiungi_mezzo':
-                // devo tornare al pannello d'amministrazione
+            case 'lista_mezzi_amministrazione';
+                return $vmezzo->impostaTemplateLista('amministrazione');
                 break;
 
-            case 'rimuovi_mezzo':
+            case 'aggiungi':
                 // devo tornare al pannello d'amministrazione
+                return $vmezzo->processaTemplateMezzo('aggiungi');
+                break;
+
+            case 'salva':
+                // aggiungo il mezzo al db
+                $esito = $this->richiestaAggiungi();
+                return $this->esitoAggiungi($esito);
+
+            case 'cancella_mezzo':
+                // devo tornare al pannello d'amministrazione
+                $esito = $this->richiestaRimuovi();
+                return $this->esitoRimuovi($esito);
                 break;
 
             case 'modifica_mezzo':
@@ -53,6 +65,71 @@ class CMezzo {
 
         }
 
+    }
+
+    private function richiestaAggiungi() {
+
+        $vmezzo = USingleton::getInstances('VMezzo');
+        $mezzo = $vmezzo->getDatiMezzo();
+        if ($mezzo['immagine'] != 'no_image' && $mezzo['immagine'] != 'overflow exception') {
+            $fmezzo = new FMezzo();
+            return $fmezzo->addRow($mezzo);
+        } else {
+            return $mezzo['immagine'];
+        }
+
+    }
+
+    private function esitoAggiungi($paramEsito) {
+
+        $vmezzo = USingleton::getInstances('VMezzo');
+        $result = '';
+
+        if ($paramEsito == 1) {
+            $result = $vmezzo->setRedirectText('Upload completato');
+        } else {
+            if ($paramEsito == 'no_image') {
+                $vmezzo->setErroreAggiungi('Nessuna immagine selezionata');
+                $result = $vmezzo->processaTemplateMezzo('aggiungi');
+            } else {
+                if ($paramEsito == 'overflow exception') {
+                    $vmezzo->setErroreAggiungi('Dimensioni dell\'immagine elevate');
+                    $result = $vmezzo->processaTemplateMezzo('aggiungi');
+                } else {
+                    $vmezzo->setErroreAggiungi('Upload non riuscito');
+                    $result = $vmezzo->processaTemplateMezzo('aggiungi');
+                }
+
+            }
+
+        }
+
+        return $result;
+
+    }
+
+    private function richiestaRimuovi() {
+        // prendo l'elemento dalla view
+        $vmezzo = USingleton::getInstances('VMezzo');
+        $idmezzo = $vmezzo->getMezzoId();
+        // cancello l'elemento
+        $fmezzo = new FMezzo();
+        $esito = $fmezzo->deleteRow($idmezzo);
+
+        return $esito;
+
+    }
+
+    private function esitoRimuovi($flag) {
+
+        $vmezzo = USingleton::getInstances('VMezzo');
+
+        if ($flag) {
+            return $vmezzo->setRedirectText('Mezzo rimosso');
+        } else {
+//            $vmezzo->setErrorList('Cancellamento non riuscito');
+            return $vmezzo->impostaTemplateLista('amministrazione');
+        }
     }
 
 }

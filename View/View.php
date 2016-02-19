@@ -22,6 +22,12 @@ class View extends Smarty {
         $this->caching = FALSE;
         
     }
+
+
+    public function setRedirectText($paramText) {
+        $this->assign('redirect_text', $paramText);
+        return $this->fetch('./templates/redirect.tpl');
+    }
     
 }
 

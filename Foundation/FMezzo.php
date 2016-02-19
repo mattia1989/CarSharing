@@ -16,13 +16,6 @@ class FMezzo extends FDatabase {
         $this->resultClass = 'EMezzo';
         
     }
-
-    public function getAllElement() {
-        // prendo l'array di mezzi nel db
-        $query = 'SELECT * FROM Mezzo;';
-        return $this->executeQuery($query);
-
-    }
     
 }
 

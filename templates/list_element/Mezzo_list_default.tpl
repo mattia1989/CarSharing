@@ -27,7 +27,8 @@
         </div>
     </span>
     <span id="mezzo_image">
-        qui va l'immagine
+        <img src="./templates/getImageMezzo.php&immagine={$idMezzo}">
+        {*{$immagineMezzo}*}
     </span>
     <span id="button_visualizza_specifiche">
         <form name="specifiche_mezzo_form" method="get">

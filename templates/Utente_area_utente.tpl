@@ -34,7 +34,7 @@
                     <td><input class="input_field" type="text" name="admin" value="{$user_data_admin}" /></td>
                 </tr>
             </table>
-            <input type="submit"class="input_field" name="user_button" id="user_button_id" value="Torna alla homepage" />
         </fieldset>
     </form>
+    <input type="button"class="input_field" name="user_button" id="user_button_id" value="Torna alla homepage" />
 </div>

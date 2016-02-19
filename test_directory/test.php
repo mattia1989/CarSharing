@@ -6,9 +6,10 @@
  * Time: 22:08
  */
 
-$str = 'ciaoquestaeunastringadiprova';
-echo $str[strlen($str)-1].'\n\n';
-echo substr($str, 0, strlen($str)-1).'\n\n';
-//echo substr(0, strlen($str)-2).'\n\n';
-//echo substr($str, strlen($str)-2).'\n\n';
+$futente = new FUtente();
+$load = $futente->load('3');
+header('Content-Type:  image/jpeg');
+echo $load['immagine'];
+
 ?>
+

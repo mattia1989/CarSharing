@@ -5,11 +5,9 @@
 <!-- TEMPLATE -->
 
 <div>
-    {*<span id="img_mezzo">*}
-        {*{$immagine}*}
-    {*</span>*}
     <span id="specifiche_mezzo_image">
-        qui va l'immagine
+        <img src="./templates/getImageMezzo.php&immagine={$id}">
+        {*{$immagine}*}
     </span>
     <span class="specifiche_mezzo">
         <div>
@@ -38,4 +36,4 @@
             <input type="submit" name="get_lista_mezzo" value="Torna alla lista mezzi" />
         </form>
     </span>
-</d>
+</div>

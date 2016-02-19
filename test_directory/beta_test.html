@@ -15,7 +15,7 @@
 <a href="http://www.google.it" >jQuery</a>
 <div>
     <form name="form_test" id="form_test" class="test_class" method="get" action="" >
-        <input type="text" class="test_class" name="test_input" id="test_input" required />
+        <input type="text" class="test_class" name="test_input" id="test_input"  />
         <input type="submit" class="test_class" name="test_button" id="test_button" value="TEST BUTTON" />
     </form>
 </div>
@@ -23,14 +23,7 @@
 </body>
 
 <script>
-    var form = $("#test_input");
-    form.rules( 'add', {
-        required: true,
-        message: {
-            required: "inserire per forza"
-        }
-    });
-
-    form.validate();
+    $("#form_test").addRule("required", "test_input");
+    $("#form_test").validate();
 </script>
 </html>
