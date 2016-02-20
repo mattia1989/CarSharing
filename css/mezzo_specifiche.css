@@ -14,3 +14,10 @@
 {
     float: right;
 }
+
+.stato_class
+{
+    color: red;
+    font-size: 25px;
+    font-family: Serif;
+}

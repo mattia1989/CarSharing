@@ -25,6 +25,12 @@
         <div>
             Prezzo giornalier: {$prezzoMezzo}
         </div>
+        <div>
+            Stato: {$statoMezzo}
+        </div>
+        <div>
+            {$cambiaStatoMezzo}
+        </div>
     </span>
     <span id="mezzo_image">
         <img src="./templates/getImageMezzo.php&immagine={$idMezzo}">
@@ -34,7 +40,8 @@
             <input type="hidden" name="controller" value="mezzo" />
             <input type="hidden" name="task" value="cancella_mezzo" />
             <input type="hidden" name="id_mezzo" value="{$idMezzo}" />
-            <input type="submit" name="cancella_mezzo" value="Cancella" />
+            <input type="submit" id="cancella_mezzo_button" name="cancella_mezzo" value="Cancella" />
         </form>
     </span>
 </div>
+

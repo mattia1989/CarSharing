@@ -7,7 +7,6 @@
 <div>
     <span id="specifiche_mezzo_image">
         <img src="./templates/getImageMezzo.php&immagine={$id}">
-        {*{$immagine}*}
     </span>
     <span class="specifiche_mezzo">
         <div>
@@ -28,6 +27,12 @@
         <span>
             Prezzo giornalier: {$prezzo_giornaliero}
         </span>
+        <div class="stato_class">
+            Stato: {$stato}
+        </div>
+        <div class="stato_class">
+            {$prenota_ora}
+        </div>
     </span>
     <span id="button_specifiche">
         <form name="specifiche_mezzo_form" onsubmit="./index.php">

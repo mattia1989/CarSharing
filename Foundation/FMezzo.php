@@ -16,7 +16,16 @@ class FMezzo extends FDatabase {
         $this->resultClass = 'EMezzo';
         
     }
-    
+
+    public function setStatus($paramId, $paramStato)
+    {
+        $stato = $paramStato ? 'TRUE' : 'FALSE';
+        $query = 'UPDATE '.$this->table.' SET stato ='.$stato.' WHERE '.$this->keytable.' =\' '.$paramId.'\';';
+
+        return $this->executeQuery($query);
+
+    }
+
 }
 
 ?>

@@ -25,6 +25,9 @@
         <div>
             Prezzo giornalier: {$prezzoMezzo}
         </div>
+        <div>
+            Stato veicolo: {$statoMezzo}
+        </div>
     </span>
     <span id="mezzo_image">
         <img src="./templates/getImageMezzo.php&immagine={$idMezzo}">

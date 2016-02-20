@@ -14,7 +14,6 @@ class CParcheggio {
         switch ($vparcheggio->getTask()) {
 
             case 'lista_parcheggi_utente':
-                echo 'sopno';
                 return $vparcheggio->impostaTemplateLista('default');
                 break;
 
@@ -32,7 +31,6 @@ class CParcheggio {
 
             case 'cancella_parcheggio':
                 $temp = $this->rimuoviParcheggio();
-                echo $temp;
                 return $this->esitoRimuovi($temp);
                 break;
 
@@ -67,7 +65,6 @@ class CParcheggio {
     {
         $vparcheggio = USingleton::getInstances('VParcheggio');
         $idParcheggio = $vparcheggio->getParcheggioId();
-        echo $idParcheggio;
         // cancello l'elemento
         $fparcheggio = new FParcheggio();
         if($fparcheggio->load($idParcheggio)) {

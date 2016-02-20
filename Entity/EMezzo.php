@@ -14,6 +14,7 @@ class EMezzo {
     public $km;
     public $colore;
     public $prezzo_giornaliero;
+    public $stato;
 
     public function __construct() {
     }

@@ -35,6 +35,10 @@ class CMezzo {
                 $esito = $this->richiestaAggiungi();
                 return $this->esitoAggiungi($esito);
 
+            case 'cambia_stato_mezzo':
+                // cambio lo stato del mezzo tramite pannello amministrato
+                return $vmezzo->setRedirectText($this->richiestaCambioStato());
+
             case 'cancella_mezzo':
                 // devo tornare al pannello d'amministrazione
                 $esito = $this->richiestaRimuovi();
@@ -129,6 +133,26 @@ class CMezzo {
         } else {
             return $vmezzo->setRedirectText('Operazione non riuscita');
         }
+    }
+
+    private function richiestaCambioStato()
+    {
+        $vmezzo = USingleton::getInstances('VMezzo');
+        $idMezzo = $vmezzo->getMezzoId();
+        $fmezzo = new FMezzo();
+        $fmezzoload = $fmezzo->load($idMezzo);
+
+        if (!$fmezzoload) {
+            return 'Mezzo non trovato';
+        } else {
+            $fmezzoload = $fmezzo->setStatus($fmezzoload['id'], !$fmezzoload['stato']);
+            if (!$fmezzoload) {
+                return 'Impossibile cambiare lo stato';
+            } else {
+                return 'Operazione effettuata con successo';
+            }
+        }
+
     }
 
 }

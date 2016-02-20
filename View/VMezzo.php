@@ -14,7 +14,7 @@ class VMezzo extends View {
     public function getDatiMezzo() {
 
         $vmezzo = USingleton::getInstances('VMezzo');
-        $datiinseriti = array('targa', 'modello', 'cilindrata', 'carburante', 'km', 'colore', 'prezzo_giornaliero', 'immagine');
+        $datiinseriti = array('targa', 'modello', 'cilindrata', 'carburante', 'km', 'colore', 'prezzo_giornaliero', 'immagine', 'stato');
         $dati = array();
 
         foreach($datiinseriti as $elemento) {
@@ -93,7 +93,7 @@ class VMezzo extends View {
         }
     }
 
-    public function setElementoMezzo($paramMezzo, $paramEmementType) {
+    public function setElementoMezzo($paramMezzo, $paramElementType) {
         // ricreo l'elemento della lista
         $this->assign('idMezzo', $paramMezzo['id']);
         $this->assign('targaMezzo', $paramMezzo['targa']);
@@ -101,8 +101,15 @@ class VMezzo extends View {
         $this->assign('carburanteMezzo', $paramMezzo['carburante']);
         $this->assign('prezzoMezzo', $paramMezzo['prezzo_giornaliero']);
         $this->assign('immagineMezzo', $paramMezzo['immagine']);
+        $this->assign('statoMezzo', $paramMezzo['stato'] ? 'DISPONIBILE' : 'NON DISPONIBILE');
 
-        return $this->fetch('./templates/list_element/Mezzo_list_'.$paramEmementType.'.tpl');
+        if ($paramElementType != 'default') {
+            // setto il bottone per l'admin
+            $this->assign('cambiaStatoMezzo', $this->fetch('./templates/button/bottone_cambia_stato_mezzo.tpl'));
+            $this->assign('id_mezzo', $paramMezzo['id']);
+        }
+
+        return $this->fetch('./templates/list_element/Mezzo_list_'.$paramElementType.'.tpl');
 
     }
 
@@ -144,10 +151,18 @@ class VMezzo extends View {
     public function impostaTemplateSpecificheMezzo($paramMezzo) {
         // setto la view con le specifiche
         foreach ($paramMezzo as $key => $value) {
-            $this->assign($key, $value);
+            if ($key != 'immagine' && $key != 'stato') $this->assign($key, $value);
+        }
+        // in questa if devo settare anche lo stato del bottone
+        if ($paramMezzo['stato']) {
+            $this->assign('stato', 'DISPONIBILE');
+            $this->assign('prenota_ora', $this->fetch('./templates/button/bottone_prenota_ora.tpl'));
+        } else {
+            $this->assign('stato', 'NON DISPONIBILE');
         }
 
         $template = $this->processaTemplateMezzo('specifiche');
+
         return $this->impostaZonaCentraleTemplateMezzo($template, 'default');
 
     }

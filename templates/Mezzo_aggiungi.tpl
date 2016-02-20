@@ -40,6 +40,10 @@
             <label id="immaginelabel_id" class="input_field">Immagine:</label>
             <input type="file" id="immagine_id" class="input_field" name="immagine" />
         </div>
+        <div>
+            <label id="statolabel_id" class="input_field">Stato:</label>
+            <input type="text" class="input_field" name="stato" id="statoinput_id" />
+        </div>
         <div id="aggiungi_mezzo_error">
             <label class="error_field" id="registrazione_error_label">{$var_error}</label>
         </div>
