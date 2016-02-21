@@ -1,6 +1,6 @@
 <!-- CSS -->
 
-<link rel="stylesheet" type="text/css" href="./css/mezzo_specifiche.css">
+<link rel="stylesheet" type="text/css" href="./css/prenotazione_specifiche.css">
 
 <!-- TEMPLATE -->
 
@@ -32,16 +32,22 @@
                 Stato: {$stato}
             </div>
             <div class="stato_class">
-                {$prenota_ora}
+                Parcheggiata presso: {$id_park} {$indirizzo_park} {$citta_park} {$provincia_park}
             </div>
         </span>
+    </form>
+    <form name="effetta_prenotazione" method="get" action="./index.php">
+        <input type="hidden" name="controller" value="prenotazione" />
+        <input type="hidden" name="task" value="aggiungi" />
         <input type="hidden" name="id_mezzo" value="{$id}" />
+        <input type="hidden" name="id_park" value="{$id_park}" />
+        <input type="submit" name="effettua_prenotazione_button" value="PRENOTA!" />
     </form>
     <span id="button_specifiche">
-        <form name="specifiche_mezzo_form" onsubmit="./index.php">
-            <input type="hidden" name="controller" value="mezzo" />
-            <input type="hidden" name="task" value="lista_mezzi" />
-            <input type="submit" name="get_lista_mezzo" value="Torna alla lista mezzi" />
+        <form name="annulla_prenotazione_form" onsubmit="./index.php">
+            <input type="hidden" name="controller" value="prenotazione" />
+            <input type="hidden" name="task" value="lista_disponibilita" />
+            <input type="submit" name="get_lista_mezzo" value="Torna alla lista" />
         </form>
     </span>
 </div>

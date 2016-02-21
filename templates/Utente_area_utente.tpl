@@ -36,5 +36,11 @@
             </table>
         </fieldset>
     </form>
-    <input type="button"class="input_field" name="user_button" id="user_button_id" value="Torna alla homepage" />
+    <form id="riconsegna_form" action="./index.php" method="get">
+        <input type="hidden" name="prenotazione_in_corso" value="{$id_prenotazione_in_corso}" />
+        {$bottone_riconsegna}
+    </form>
+    <form action="./index.php" method="get">
+        <input type="submit"class="input_field" name="user_button" id="user_button_id" value="Torna alla homepage" />
+    </form>
 </div>

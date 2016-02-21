@@ -26,6 +26,13 @@ class FMezzo extends FDatabase {
 
     }
 
+    public function mezziDisponibili() {
+
+        $query = 'SELECT * FROM '.$this->table.' WHERE stato = TRUE;';
+
+        return $this->executeQuery($query);
+    }
+
 }
 
 ?>

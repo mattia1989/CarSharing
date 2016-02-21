@@ -5,7 +5,7 @@
 <!-- TEMPLATE -->
 
 <div id="element_id">
-    <span class="utente_element">
+    <div class="utente_element">
         <div>
             Email: {$user_data_email}
         </div>
@@ -21,7 +21,7 @@
         <div>
             admni: {$user_data_admin}
         </div>
-    </span>
+    </div>
     <span>
         <form name="specifiche_mezzo_form" method="post">
             <input type="hidden" name="controller" value="utente" />

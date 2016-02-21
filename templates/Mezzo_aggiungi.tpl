@@ -42,7 +42,15 @@
         </div>
         <div>
             <label id="statolabel_id" class="input_field">Stato:</label>
-            <input type="text" class="input_field" name="stato" id="statoinput_id" />
+            <span>
+                <input type="radio" class="input_field" name="stato" value="0" checked/>
+                <label class="input_field">Disponibile</label>
+            </span>
+            <span>
+                <input type="radio" class="input_field" name="stato" value="1" />
+                <label class="input_field">Non Disponibile</label>
+            </span>
+            {*<input type="text" class="input_field" name="stato" id="statoinput_id" />*}
         </div>
         <div id="aggiungi_mezzo_error">
             <label class="error_field" id="registrazione_error_label">{$var_error}</label>

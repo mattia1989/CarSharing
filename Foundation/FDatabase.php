@@ -178,6 +178,14 @@ class FDatabase {
 
     }
 
+    public function getLastRow() {
+
+        $query = 'SELECT * FROM '.$this->table.' ORDER BY '.$this->keytable.' DESC LIMIT 1;';
+
+        return $this->executeQuery($query);
+
+    }
+
     public function deleteRow($key) {
         // rimuove la riga dal db in base alla chiave primaria
         $query = 'DELETE FROM '.$this->table.' WHERE '.$this->keytable.' = \''.$key.'\';';

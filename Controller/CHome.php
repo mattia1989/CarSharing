@@ -61,12 +61,16 @@ class CHome {
                 $vhome->setContent($tmp);
                 break;
 
-            case 'prenotazioni':
+            case 'prenotazione':
+                $cprenotazione = USingleton::getInstances('CPrenotazione');
+                $tmp = $cprenotazione->smista();
+                $vhome->setContent($tmp);
                 break;
             
             default:
                 return $vhome->processaTemplate('Home_default');
-//                $vhome->setContent($tmp);
+                $vhome->setContent($tmp);
+
         }
     }
     

@@ -16,7 +16,10 @@
         <link rel="stylesheet" type="text/css" href="./css/default.css" />
         
         <!-- JAVASCRIPT -->
-        
+
+        <script type="text/javascript" src="./js/jquery/jquery.js" ></script>
+        <script type="text/javascript" src="./js/jquery/jquery.validate.js" ></script>
+
     </head>
     
     <!-- BODY -->
@@ -40,7 +43,7 @@
         
         <!-- CONTENT -->
             
-        <div id="content">
+        <div id="content" onsubmit="loadContent()">
             {$content}
         </div>
         
@@ -61,3 +64,23 @@
     </body>
     
 </html>
+
+{*<script>
+    function loadContent() {
+        alert('caricato');
+
+        var xhttp = new XMLHttpRequest();
+        var myXml = xhttp.responseXML;
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                myXml = xhttp.responseXML;
+                alert('prendo il responso');
+                document.getElementById("content").innerHTML = myXml;
+                alert('dopo');
+            }
+        };
+        xhttp.open("GET", "./index.php", true);
+        xhttp.send();
+
+    }
+</script>*}

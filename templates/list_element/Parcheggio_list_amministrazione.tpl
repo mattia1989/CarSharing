@@ -16,6 +16,9 @@
         <div>
             Citta parcheggio: {$citta}
         </div>
+        <div>
+            Provincia parcheggio: {$provincia}
+        </div>
     </span>
     <span id="button_visualizza_specifiche">
         <form name="cancella_pacheggio_form" method="get">

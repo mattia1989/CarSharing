@@ -122,6 +122,7 @@ class CUtente {
         $usession = USingleton::getInstances('USession');
         $cookie['email'] = $usession->getValue('email');
         $cookie['admin'] = $usession->getValue('admin');
+        $cookie['stato'] = $usession->getValue('stato');
 
         return $cookie;
 
@@ -134,6 +135,7 @@ class CUtente {
         $usession = USingleton::getInstances('USession');
         $usession->setValue('email', $paramDBData['email']);
         $usession->setValue('admin', $paramDBData['admin']);
+        $usession->setValue('stato', $paramDBData['stato']);
 
     }
 
@@ -462,20 +464,16 @@ class CUtente {
         $user = $this->getCookie();
         $userDB = new FUtente();
         $userload = $userDB->load($user['email']);
-
         // controllo il valore caricato e setto i dati sulla view
         $vutente = USingleton::getInstances('VUtente');
-        $template = '';
 
         if (!$userload['email']) {
             // redirect alla pagina di redirect per la home
-            $template = $vutente->setRedirectText('Utente non presente, stai per essere reindirizzato alla home...');
+            return $vutente->setRedirectText('Utente non presente, stai per essere reindirizzato alla home...');
         } else {
             // carico i dati sulla view
-            $template = $vutente->setUserData($userload, 'utente');
+            return $vutente->setUserData($userload, 'utente');
         }
-
-        return $template;
 
     }
 
@@ -544,6 +542,8 @@ class CUtente {
         $usession = USingleton::getInstances('USession');
         $usession->removeValue('email');
         $usession->removeValue('admin');
+        $usession->removeValue('stato');
+
         return $usession->destroySession();
 
     }
