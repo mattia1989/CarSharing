@@ -68,10 +68,12 @@ class CHome {
                 break;
             
             default:
-                return $vhome->processaTemplate('Home_default');
+                $tmp = $vhome->fetch('./templates/slideshow.tpl');
                 $vhome->setContent($tmp);
+                return $vhome->processaTemplate('Home_default');
 
         }
+
     }
     
 }

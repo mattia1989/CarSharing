@@ -37,6 +37,7 @@ class CPrenotazione
                 break;
 
         }
+
     }
 
     private function proceduraPrenotazione()

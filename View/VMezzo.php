@@ -133,7 +133,7 @@ class VMezzo extends View {
         $fmezzo = new FMezzo();
         $mezzo_load = $fmezzo->getAllElement();
 
-        if (count($mezzo_load) == 1) {
+        if (!$mezzo_load[0]) {
             $lista = $this->setElementoMezzo($mezzo_load, $paramType);
         } else {
             for ($i = 0; $i < count($mezzo_load); $i++) {
@@ -160,6 +160,8 @@ class VMezzo extends View {
         } else {
             $this->assign('stato', 'NON DISPONIBILE');
         }
+
+//        $this->assign('immagine', '<img src="data:image/jpeg;base64,'.base64_decode($paramMezzo['immagine']).'" width="290" height="290">');
 
         $template = $this->processaTemplateMezzo('specifiche');
 

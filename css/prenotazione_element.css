@@ -1,0 +1,23 @@
+#element_id
+{
+    border: double;
+    background: whitesmoke;
+    float: left;
+    width: 79%;
+    font-family: Calibri;
+}
+
+.mezzo_element
+{
+    float: left;
+}
+
+#mezzo_image
+{
+    float: right;
+}
+
+#button_visualizza_specifiche
+{
+    float: left;
+}

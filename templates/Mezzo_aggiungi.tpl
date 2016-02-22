@@ -1,11 +1,7 @@
-<!-- SCRIPT -->
-
-<!--<script type="text/javascript" src="./js/registrazione_valida.js"></script>-->
-
 <!-- TEMPLATE -->
 
 <div id="content" xmlns="http://www.w3.org/1999/html">
-    <form id="aggiungimezzo_id" name="aggiungimezzo" method="post" action="index.php" enctype="multipart/form-data">
+    <form id="aggiungimezzo_form" name="aggiungimezzo" method="post" action="index.php" enctype="multipart/form-data">
         <div>
             <div>
                 <label  id="targalabel_id" class="input_field">Targa: </label>
@@ -33,7 +29,7 @@
             <input type="text" id="colore_id" class="input_field" name="colore" />
         </div>
         <div>
-            <label id="prezzo_giornaliero_label_id" class="input_field">Colore: </label>
+            <label id="prezzo_giornaliero_label_id" class="input_field">Prezzo giornaliero: </label>
             <input type="text" id="prezzo_giornaliero_id" class="input_field" name="prezzo_giornaliero" />
         </div>
         <div>
@@ -43,14 +39,13 @@
         <div>
             <label id="statolabel_id" class="input_field">Stato:</label>
             <span>
-                <input type="radio" class="input_field" name="stato" value="0" checked/>
+                <input type="radio" class="input_field" name="stato" value="0" />
                 <label class="input_field">Disponibile</label>
             </span>
             <span>
-                <input type="radio" class="input_field" name="stato" value="1" />
+                <input type="radio" class="input_field" name="stato" value="1" checked />
                 <label class="input_field">Non Disponibile</label>
             </span>
-            {*<input type="text" class="input_field" name="stato" id="statoinput_id" />*}
         </div>
         <div id="aggiungi_mezzo_error">
             <label class="error_field" id="registrazione_error_label">{$var_error}</label>
@@ -67,3 +62,7 @@
         <input type="submit" class="input_field" name="return_button" value="Torna alla lista" />
     </form>
 </div>
+
+<!-- SCRIPT -->
+
+<script type="text/javascript" src="./js/Aggiungi_mezzo_validate_check.js"></script>

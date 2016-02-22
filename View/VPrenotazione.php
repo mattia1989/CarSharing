@@ -100,7 +100,7 @@ class VPrenotazione extends View
         $fmezzo = new FMezzo();
         $fmezzoload = $fmezzo->mezziDisponibili();
 
-        if (count($fmezzoload) == 1) {
+        if (!$fmezzoload[0]) {
             $lista = $this->setElementoMezzoDisponibile($fmezzoload, $paramType);
         } else {
             for ($i = 0; $i < count($fmezzoload); $i++) {
@@ -133,6 +133,14 @@ class VPrenotazione extends View
         $this->assign('prezzoMezzo', $paramMezzo['prezzo_giornaliero']);
         $this->assign('immagineMezzo', $paramMezzo['immagine']);
         $this->assign('statoMezzo', $paramMezzo['stato'] ? 'DISPONIBILE' : 'NON DISPONIBILE');
+        // assegnoil parcheggio in cui risiede
+        $fprenotazione_pracheggio = new FPrenotazione_Parcheggio();
+        $fprenotazione_pracheggioload = $fprenotazione_pracheggio->getLastParcheggio($paramMezzo['id']);
+        $fparcheggio = new FParcheggio();
+        $fparcheggioload = $fparcheggio->load($fprenotazione_pracheggioload['id_parcheggio']);
+        foreach($fparcheggioload as $key => $value) {
+            $this->assign($key, $value);
+        }
 
         if ($paramElementType != 'default') {
             // setto il bottone per l'admin
@@ -140,7 +148,7 @@ class VPrenotazione extends View
             $this->assign('id_mezzo', $paramMezzo['id']);
         }
 
-        return $this->fetch('./templates/list_element/Mezzo_list_'.$paramElementType.'.tpl');
+        return $this->fetch('./templates/list_element/Prenotazione_list_'.$paramElementType.'.tpl');
 
     }
 

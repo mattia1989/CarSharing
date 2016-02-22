@@ -1,12 +1,7 @@
-<!-- SCRIPT -->
-
-<script type="text/javascript" src="./js/registrazione_valida.js"></script>
-<script type="text/javascript" src="./js/Calcola_sha1.js"></script>
-
 <!-- TEMPLATE -->
 
 <div id="content" xmlns="http://www.w3.org/1999/html">
-    <form id="registration_form_id" name="registration_form" method="post" action="index.php" onsubmit="return validaFormRegistrazione();">
+    <form id="registration_form" name="registration" method="post" action="index.php" onsubmit="return validaFormRegistrazione();">
         <div>
             <div>
                 <label  id="new_email_label" class="input_field">E-mail: </label>
@@ -32,7 +27,7 @@
         <div>
             <input type="checkbox" class="input_field" name="normative" id="normative_id">
                 <span class="input_field" >
-                    "Si accetta tutto il sacramento dell'altare maggiore e minore che sia."
+                    "Si accettano le norme sulla privacy ed il trattamento dei dati personali."
                 </span>
             </input>
         </div>
@@ -46,3 +41,9 @@
         </div>
     </form>
 </div>
+
+<!-- SCRIPT -->
+
+<script type="text/javascript" src="./js/Registrazione_validate_check.js"></script>
+<script type="text/javascript" src="./js/registrazione_valida.js"></script>
+<script type="text/javascript" src="./js/Calcola_sha1.js"></script>

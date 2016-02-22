@@ -87,7 +87,6 @@ class CUtente {
             case 'logout':
                 $this->proceduraLogout();
                 return$vutente->setRedirectText('Logout effettuato, stai per essere reindirizzato alla home...');
-//                return $vutente->processaTemplateUtente('redirect');
                 break;
 
             case 'invia_mail_di_prova':
@@ -151,7 +150,6 @@ class CUtente {
         // prendo i dati dal db in base al nome utente
         $user_db = new FUtente();
         $user_load = $user_db->load($user_data['email']);
-        echo $user_load['email'];
 
         if ($user_load == false) {
             $this->errore_generico = 'email non presente';

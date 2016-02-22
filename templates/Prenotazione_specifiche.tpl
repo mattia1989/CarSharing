@@ -7,6 +7,7 @@
 <div>
     <span id="specifiche_mezzo_image">
         <img src="./templates/getImageMezzo.php&immagine={$id}">
+        {*{$immagine}*}
     </span>
     <form name="prenota_form" method="get" action="./index.php" >
         <span class="specifiche_mezzo">
