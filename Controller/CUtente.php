@@ -142,7 +142,6 @@ class CUtente {
 
         $flag = false;
         // qui controllo se l'utente può autenticarsi
-
         // prendo i dati dalla view di login
         $vutente = USingleton::getInstances('VUtente');
         $user_data = $vutente->getLoginData();
